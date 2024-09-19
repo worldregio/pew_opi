@@ -8,8 +8,10 @@ website:
     left:
       - href: index.qmd
         text: "Index"
-      - href: about.qmd
-        text: "About"
+      - href: author.qmd
+        text: "Author"
+      - href: data.qmd
+        text: "Data"
     right: 
       - icon: github # add icons as navbar buttons
         href: https://github.com/worldregio/pew_opi

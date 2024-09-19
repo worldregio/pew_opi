@@ -1,0 +1,100 @@
+---
+title: "Data"
+---
+
+The data used in our analysis has been extracted from the website of the Pew Research Center where they can be freely downloaded. They are more precisely extraction from the Pew Global Attitude Survey from 2002 to present (2023). 
+
+After briefly presenting the source, we will explain the different steps of harmonization that we have realized to obtain a continuous time series of international opinion. 
+
+
+```{r}
+library(dplyr,warn.conflicts = F, quietly=T)
+library(knitr)
+library(reshape2)
+don<-readRDS("data/pew_all_opi.RDS") %>% rename(rel = opi_rel)
+```
+
+
+## The Pew Global Attitude Survey (PGAS)
+
+As it is perfectly exlained on the website of EU, the PGAS is not exactly a pure scientific survey as the World Value Survey or the European Value Survey. It is clearly a politically-driven tool created in the US after the schock of 11 September 2001 : 
+
+*The Pew Global Attitudes Project is a series of worldwide public opinion surveys encompassing a broad array of subjects ranging from people’s assessments of their own lives to their views about the current state of the world and important issues of the day. The Pew Global Attitudes Project is co-chaired by former U.S. Secretary of State Madeleine K. Albright; currently principal; the Albright Group LLC; and by former Senator John C. Danforth; currently partner; Bryan Cave LLP. The project is directed by Andrew Kohut; president of the Pew Research Center; a nonpartisan “fact tank” in Washington; DC; that provides information on the issues; attitudes and trends shaping America and the world. The Pew Global Attitudes Project is principally funded by The Pew Charitable Trusts. The William and Flora Hewlett Foundation provided a supplemental grant for the 2002 survey.*
+
+*The Pew Global Attitudes Project was originally conceived with two primary objectives: to gauge attitudes in every region toward globalization; trade and an increasingly connected world; and to measure changes in attitudes toward democracy and other key issues among some of the European populations surveyed in the 13-nation 1991 benchmark survey; the Pulse of Europe (also directed by Dr. Albright and Mr. Kohut). After the terrorist attacks on September 11; 2001; the scope of the project was broadened to measure attitudes about terrorism; the intersection between the Islamic faith and public policy in countries with significant Muslim populations; and to probe attitudes toward the United States more deeply in all countries. Recent Global Attitudes surveys have gauged worldwide opinion about international news developments; including the war in Iraq. Over time; the project has surveyed more than 90000 people in 50 countries.*
+
+Source : [European Union, Knowledge for policy, 2022](https://knowledge4policy.ec.europa.eu/dataset/ds00139_en)
+
+The description presented here is not perfectly correct because, as we will see in our description of data, the coverage is much more important than 90 000 people in 50 countries. The authors of the EU description have also forgotten to mention that one of the initial purposes of the Pew Charitable Trust was to follow the evolution of the attitudes toward religion in the world, which is demonstrate by recurrent questions in the different waves of survey about this topic. 
+
+We will complete this description later, but it is sufficient to remember that **the PGAS is a political barometer of world opinion elaborated in the US after the shock of September 11, 2001**.
+
+---
+
+## Selection of indicators
+
+From 2002 to 2023, 22 waves of survey has been realized and the majority of questions has changed over time or have been formulated in a different way, which make comparisons difficult. We have therefore selected a very limited number of 5 questions  which has kept exactly the same wording over time and has been asked in different waves. The table below indicates for each question the waves where it has been used. 
+
+
+```{r, echo=FALSE}
+tab<- don %>% group_by(wav) %>% summarise(sta = sum(!is.na(sta)),
+                                          sex = sum(!is.na(sex)),
+                                          age= sum(!is.na(age)),
+                                          rel= sum(!is.na(rel)),
+                                          opi_USA= sum(!is.na(opi_USA)), 
+                                          opi_CHN= sum(!is.na(opi_CHN)),   
+                                          opi_RUS= sum(!is.na(opi_RUS)), 
+                                          opi_UN= sum(!is.na(opi_UN)),
+                                          opi_EU= sum(!is.na(opi_EU)), 
+                                          opi_IRN= sum(!is.na(opi_IRN)),   
+                                          opi_DEU= sum(!is.na(opi_DEU)),                                                           opi_FRA= sum(!is.na(opi_FRA)),
+                                          opi_JPN= sum(!is.na(opi_JPN)), 
+                                          opi_IND= sum(!is.na(opi_IND)),   
+                                          opi_TWN= sum(!is.na(opi_TWN)),                                                            opi_BRA= sum(!is.na(opi_BRA))                       
+                                          
+)
+mat<-as.matrix(tab[,-1])
+row.names(mat)<-substr(tab$wav,3,4)
+mat0<-as.numeric(mat>0)
+dim(mat0)<-dim(mat)
+row.names(mat0)<-row.names(mat)
+colnames(mat0)<-colnames(mat)
+kable(t(mat0), caption= "Availability of indicator by waves of survey")
+```
+
+## States investigated (*sta*)
+
+There is a great variability in the list and number of states that was investigated by the PGAS. Generally speaking the number of states investigated was more important for the odd-numbered years with a larger extension toward developping countries from the South. The even-numberd years was generally characterised by a lower number of countries and a focus on rich countries from the North. But they are many exceptions to this rule. 
+
+```{r, echo = FALSE}
+tab<-don %>% group_by(sta, wav) %>% count()
+tab<-dcast(tab,formula = sta~wav,value.var = "n",fill=0)
+tab2<-as.matrix(as.data.frame(tab)[,-1])
+colnames(tab2)<-substr(colnames(tab2),3,4)
+row.names(tab2)<-tab$sta
+tab3<-as.numeric(tab2>0)
+dim(tab3)<-dim(tab2)
+colnames(tab3)<-colnames(tab2)
+row.names(tab3)<-row.names(tab2)
+tot<-addmargins(tab3)
+tot<-tot[order(-tot[,23]),]
+kable(tot, caption ="Countries investigated by waves of survey")
+```
+
+These table deserve a lot of comment as it reveals at the same time (1) the evolution of choices made by the PGAS in their coverage of the world opinion, but also (2) the geopolitical constraints that made possible or not the realization of the survey in the target countries. Just a few examples, before a more precise investigation :
+
+- The countries that has been the most present in the 22 waves are all members of "the Western" (Germany, France, UK, Spain, Japan, Poland) and can be considered as "friends" of the US.
+
+- The only exception to the previous rule is Russia which is systematically investigated from 2002 to 2015 but not in 2016. Then present again in 2017-2019 but not after. We can imagine that the possibility to realize surveys in Russia became more difficult after the first war of Ukraine (2014) and impossible with the beginning of the Covid crisis (2020)
+
+- China was investigated in 2002 and in 2005-2016 but never after this period of time. As in the case of Russia, we can imagine that it became difficult and finally impossible to realize surveys in these country after the designation of Xi Jiping as head of state in 2013.
+
+- In the 'South', the coverage is much more important for large emerging countries (Indian Indonesia, Turkey, Brazil, ...) than smaller one. 
+
+- Africa is less covered than Middle-East
+
+- etc.
+
+From statistical point of view we should just keep in the moment that the survey has been realized at least one time in 70 countries of the world. But only a minority of them are likely to be used for the analysis of trends over long period of time. 
+
+
