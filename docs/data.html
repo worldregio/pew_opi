@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>World Polarisation - Data</title>
+<title>World Polarisation - The Pew Global Attitude Survey (PGAS)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -154,8 +120,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#the-pew-global-attitude-survey-pgas" id="toc-the-pew-global-attitude-survey-pgas" class="nav-link active" data-scroll-target="#the-pew-global-attitude-survey-pgas">The Pew Global Attitude Survey (PGAS)</a></li>
-  <li><a href="#selection-of-indicators" id="toc-selection-of-indicators" class="nav-link" data-scroll-target="#selection-of-indicators">Selection of indicators</a></li>
+  <li><a href="#five-indicators-for-long-time-series" id="toc-five-indicators-for-long-time-series" class="nav-link" data-scroll-target="#five-indicators-for-long-time-series">Five indicators for long time series</a>
+  <ul class="collapse">
+  <li><a href="#sample-design-by-country-and-year" id="toc-sample-design-by-country-and-year" class="nav-link" data-scroll-target="#sample-design-by-country-and-year">Sample design by country and year</a></li>
+  <li><a href="#availability-of-indicators-by-waves" id="toc-availability-of-indicators-by-waves" class="nav-link" data-scroll-target="#availability-of-indicators-by-waves">Availability of indicators by waves</a></li>
+  </ul></li>
   <li><a href="#states-investigated-sta" id="toc-states-investigated-sta" class="nav-link" data-scroll-target="#states-investigated-sta">States investigated (<em>sta</em>)</a></li>
+  <li><a href="#conclusion-the-core-period-of-interest-is-2007-2019" id="toc-conclusion-the-core-period-of-interest-is-2007-2019" class="nav-link" data-scroll-target="#conclusion-the-core-period-of-interest-is-2007-2019">Conclusion : the core period of interest is 2007-2019</a></li>
   </ul>
 </nav>
     </div>
@@ -164,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data</h1>
+<h1 class="title">The Pew Global Attitude Survey (PGAS)</h1>
 </div>
 
 
@@ -181,25 +152,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>The data used in our analysis has been extracted from the website of the Pew Research Center where they can be freely downloaded. They are more precisely extraction from the Pew Global Attitude Survey from 2002 to present (2023).</p>
 <p>After briefly presenting the source, we will explain the different steps of harmonization that we have realized to obtain a continuous time series of international opinion.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr,<span class="at">warn.conflicts =</span> F, <span class="at">quietly=</span>T)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>don<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"data/pew_all_opi.RDS"</span>) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">rel =</span> opi_rel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <section id="the-pew-global-attitude-survey-pgas" class="level2">
 <h2 class="anchored" data-anchor-id="the-pew-global-attitude-survey-pgas">The Pew Global Attitude Survey (PGAS)</h2>
-<p>As it is perfectly exlained on the website of EU, the PGAS is not exactly a pure scientific survey as the World Value Survey or the European Value Survey. It is clearly a politically-driven tool created in the US after the schock of 11 September 2001 :</p>
-<p><em>The Pew Global Attitudes Project is a series of worldwide public opinion surveys encompassing a broad array of subjects ranging from people’s assessments of their own lives to their views about the current state of the world and important issues of the day. The Pew Global Attitudes Project is co-chaired by former U.S. Secretary of State Madeleine K. Albright; currently principal; the Albright Group LLC; and by former Senator John C. Danforth; currently partner; Bryan Cave LLP. The project is directed by Andrew Kohut; president of the Pew Research Center; a nonpartisan “fact tank” in Washington; DC; that provides information on the issues; attitudes and trends shaping America and the world. The Pew Global Attitudes Project is principally funded by The Pew Charitable Trusts. The William and Flora Hewlett Foundation provided a supplemental grant for the 2002 survey.</em></p>
+<p>The PGAS is not exactly a pure scientific survey as the World Value Survey or the European Value Survey. It is enhanced in a long history as explained by a blog published on th website “Knowledge for Policy” of EU some years ago.</p>
 <p><em>The Pew Global Attitudes Project was originally conceived with two primary objectives: to gauge attitudes in every region toward globalization; trade and an increasingly connected world; and to measure changes in attitudes toward democracy and other key issues among some of the European populations surveyed in the 13-nation 1991 benchmark survey; the Pulse of Europe (also directed by Dr.&nbsp;Albright and Mr.&nbsp;Kohut). After the terrorist attacks on September 11; 2001; the scope of the project was broadened to measure attitudes about terrorism; the intersection between the Islamic faith and public policy in countries with significant Muslim populations; and to probe attitudes toward the United States more deeply in all countries. Recent Global Attitudes surveys have gauged worldwide opinion about international news developments; including the war in Iraq. Over time; the project has surveyed more than 90000 people in 50 countries.</em></p>
 <p>Source : <a href="https://knowledge4policy.ec.europa.eu/dataset/ds00139_en">European Union, Knowledge for policy, 2022</a></p>
-<p>The description presented here is not perfectly correct because, as we will see in our description of data, the coverage is much more important than 90 000 people in 50 countries. The authors of the EU description have also forgotten to mention that one of the initial purposes of the Pew Charitable Trust was to follow the evolution of the attitudes toward religion in the world, which is demonstrate by recurrent questions in the different waves of survey about this topic.</p>
+<p>The description presented by EU websiste is not accurate because, as we will see in our description of data, the coverage is today much more important than 90 000 people in 50 countries. And the post on the blog of EU has also forgotten to mention that one of the initial purposes of the Pew Charitable Trust, before 2001, was to follow not only the attitude of people toward democracy but also toward religion in the world.</p>
 <p>We will complete this description later, but it is sufficient to remember that <strong>the PGAS is a political barometer of world opinion elaborated in the US after the shock of September 11, 2001</strong>.</p>
 <hr>
 </section>
-<section id="selection-of-indicators" class="level2">
-<h2 class="anchored" data-anchor-id="selection-of-indicators">Selection of indicators</h2>
-<p>From 2002 to 2023, 22 waves of survey has been realized and the majority of questions has changed over time or have been formulated in a different way, which make comparisons difficult. We have therefore selected a very limited number of 5 questions which has kept exactly the same wording over time and has been asked in different waves. The table below indicates for each question the waves where it has been used.</p>
+<section id="five-indicators-for-long-time-series" class="level2">
+<h2 class="anchored" data-anchor-id="five-indicators-for-long-time-series">Five indicators for long time series</h2>
+<p>From 2002 to 2023, 22 waves of the PGAS has been realized and the majority of questions has changed over time or have been formulated in a different way, which make comparisons difficult. We have therefore selected a very limited number of 5 questions which has kept exactly the same wording over time and has been asked in different waves.</p>
+<section id="sample-design-by-country-and-year" class="level3">
+<h3 class="anchored" data-anchor-id="sample-design-by-country-and-year">Sample design by country and year</h3>
+<p>The time period (<em>wav</em>), the country investigated in the survey (<em>sta</em>) and the <em>sex</em> or <em>age</em> of the respondent are classical dimension that are used to frame the survey and choose the samples. Combined with a variable list of other framing indicators (education, urban-rural, income, …) they make possible to correct the samples by a weighting criteria (<em>weight</em>) which insure an adequation with the full population of the countries. In the majority of countries and time period, the sample size was about 1000 people, but can be sometimes lower (min = 500) or higher (max 3000). In developping countries, the survey was generally realized by face-to-face interveiw but in most developped countries (and also through time) most surveys has been realized by phone or eventually on the internet. All details on the <a href="https://www.pewresearch.org/methods/feature/international-methodology/all-survey/all-country/all-year/">country specific methodology by year</a> are available and provide very usefull information on the technical and political difficulties of realization of the survey and the related margin of errors.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/sample_rus_2019.jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Example of sampling methodology of PGAS</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="availability-of-indicators-by-waves" class="level3">
+<h3 class="anchored" data-anchor-id="availability-of-indicators-by-waves">Availability of indicators by waves</h3>
+<p>The table below indicates for each question the waves where it has been used.</p>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -661,6 +642,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
+</section>
 </section>
 <section id="states-investigated-sta" class="level2">
 <h2 class="anchored" data-anchor-id="states-investigated-sta">States investigated (<em>sta</em>)</h2>
@@ -2576,14 +2558,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>These table deserve a lot of comment as it reveals at the same time (1) the evolution of choices made by the PGAS in their coverage of the world opinion, but also (2) the geopolitical constraints that made possible or not the realization of the survey in the target countries. Just a few examples, before a more precise investigation :</p>
 <ul>
-<li><p>The countries that has been the most present in the 22 waves are all members of “the Western” (Germany, France, UK, Spain, Japan, Poland) and can be considered as “friends” of the US.</p></li>
-<li><p>The only exception to the previous rule is Russia which is systematically investigated from 2002 to 2015 but not in 2016. Then present again in 2017-2019 but not after. We can imagine that the possibility to realize surveys in Russia became more difficult after the first war of Ukraine (2014) and impossible with the beginning of the Covid crisis (2020)</p></li>
+<li><p>The countries that has been the most present in the 22 waves are members of “the Western” (Germany, France, UK, Spain, Japan, Poland) and can be considered as “friends” of the US. The US themselves has not been investogated in the final period 2021-2023, probably because the questions asked in PGAS are also asked in other national surveys of the Pew Research Center (PRC). It is certainly possible to find the data for these years elsewhere on the website of the PRC.</p></li>
+<li><p>Russia has been systematically investigated from 2002 to 2015 but not in 2016. Then present again in 2017-2019 but not after. We can imagine that the possibility to realize surveys in Russia became more difficult after the first war of Ukraine (2014) and impossible with the beginning of the Covid crisis (2020)</p></li>
 <li><p>China was investigated in 2002 and in 2005-2016 but never after this period of time. As in the case of Russia, we can imagine that it became difficult and finally impossible to realize surveys in these country after the designation of Xi Jiping as head of state in 2013.</p></li>
 <li><p>In the ‘South’, the coverage is much more important for large emerging countries (Indian Indonesia, Turkey, Brazil, …) than smaller one.</p></li>
 <li><p>Africa is less covered than Middle-East</p></li>
 <li><p>etc.</p></li>
 </ul>
 <p>From statistical point of view we should just keep in the moment that the survey has been realized at least one time in 70 countries of the world. But only a minority of them are likely to be used for the analysis of trends over long period of time.</p>
+</section>
+<section id="conclusion-the-core-period-of-interest-is-2007-2019" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-the-core-period-of-interest-is-2007-2019">Conclusion : the core period of interest is 2007-2019</h2>
+<p>Looking at the availability of data by indicator and by survey, it appears clearly that <strong>the most favorable period of observation for the analysis of opinion dynamics is 2007-2019</strong>. In 2002-2006, many indicators was not avaiblable or many countries of interest was missing. And in 2020-23, the covid crisis and the increase of geopolitical conflicts between “North” and “South” has limited the possibilities to launch surveys in countries of major interest like China or Russia.</p>
 
 
 </section>

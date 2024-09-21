@@ -1,5 +1,5 @@
 ---
-title: "Data"
+title: "The Pew Global Attitude Survey (PGAS)"
 ---
 
 The data used in our analysis has been extracted from the website of the Pew Research Center where they can be freely downloaded. They are more precisely extraction from the Pew Global Attitude Survey from 2002 to present (2023). 
@@ -7,7 +7,7 @@ The data used in our analysis has been extracted from the website of the Pew Res
 After briefly presenting the source, we will explain the different steps of harmonization that we have realized to obtain a continuous time series of international opinion. 
 
 
-```{r}
+```{r, echo=FALSE}
 library(dplyr,warn.conflicts = F, quietly=T)
 library(knitr)
 library(reshape2)
@@ -17,23 +17,36 @@ don<-readRDS("data/pew_all_opi.RDS") %>% rename(rel = opi_rel)
 
 ## The Pew Global Attitude Survey (PGAS)
 
-As it is perfectly exlained on the website of EU, the PGAS is not exactly a pure scientific survey as the World Value Survey or the European Value Survey. It is clearly a politically-driven tool created in the US after the schock of 11 September 2001 : 
-
-*The Pew Global Attitudes Project is a series of worldwide public opinion surveys encompassing a broad array of subjects ranging from people’s assessments of their own lives to their views about the current state of the world and important issues of the day. The Pew Global Attitudes Project is co-chaired by former U.S. Secretary of State Madeleine K. Albright; currently principal; the Albright Group LLC; and by former Senator John C. Danforth; currently partner; Bryan Cave LLP. The project is directed by Andrew Kohut; president of the Pew Research Center; a nonpartisan “fact tank” in Washington; DC; that provides information on the issues; attitudes and trends shaping America and the world. The Pew Global Attitudes Project is principally funded by The Pew Charitable Trusts. The William and Flora Hewlett Foundation provided a supplemental grant for the 2002 survey.*
+The PGAS is not exactly a pure scientific survey as the World Value Survey or the European Value Survey. It is enhanced in a long history as explained by a blog published on th website "Knowledge for Policy" of EU some years ago.
 
 *The Pew Global Attitudes Project was originally conceived with two primary objectives: to gauge attitudes in every region toward globalization; trade and an increasingly connected world; and to measure changes in attitudes toward democracy and other key issues among some of the European populations surveyed in the 13-nation 1991 benchmark survey; the Pulse of Europe (also directed by Dr. Albright and Mr. Kohut). After the terrorist attacks on September 11; 2001; the scope of the project was broadened to measure attitudes about terrorism; the intersection between the Islamic faith and public policy in countries with significant Muslim populations; and to probe attitudes toward the United States more deeply in all countries. Recent Global Attitudes surveys have gauged worldwide opinion about international news developments; including the war in Iraq. Over time; the project has surveyed more than 90000 people in 50 countries.*
 
 Source : [European Union, Knowledge for policy, 2022](https://knowledge4policy.ec.europa.eu/dataset/ds00139_en)
 
-The description presented here is not perfectly correct because, as we will see in our description of data, the coverage is much more important than 90 000 people in 50 countries. The authors of the EU description have also forgotten to mention that one of the initial purposes of the Pew Charitable Trust was to follow the evolution of the attitudes toward religion in the world, which is demonstrate by recurrent questions in the different waves of survey about this topic. 
+The description presented by EU websiste is not accurate because, as we will see in our description of data, the coverage is today much more important than 90 000 people in 50 countries. And the post on the blog of EU has also forgotten to mention that one of the initial purposes of the Pew Charitable Trust, before 2001, was to follow not only the attitude of people toward democracy but also toward religion in the world.
+
 
 We will complete this description later, but it is sufficient to remember that **the PGAS is a political barometer of world opinion elaborated in the US after the shock of September 11, 2001**.
 
 ---
 
-## Selection of indicators
+## Five indicators for long time series
 
-From 2002 to 2023, 22 waves of survey has been realized and the majority of questions has changed over time or have been formulated in a different way, which make comparisons difficult. We have therefore selected a very limited number of 5 questions  which has kept exactly the same wording over time and has been asked in different waves. The table below indicates for each question the waves where it has been used. 
+From 2002 to 2023, 22 waves of the PGAS has been realized and the majority of questions has changed over time or have been formulated in a different way, which make comparisons difficult. We have therefore selected a very limited number of 5 questions  which has kept exactly the same wording over time and has been asked in different waves.
+
+### Sample design by country and year
+
+The time period (*wav*), the country investigated in the survey (*sta*) and the *sex* or *age* of the respondent are classical dimension that are used to frame the survey and choose the samples. Combined with a variable list of other framing indicators (education, urban-rural, income, ...) they make possible to correct the samples by a weighting criteria (*weight*) which insure an adequation with the full population of the countries. In the majority of countries and time period, the sample size was about 1000 people, but can be sometimes lower (min = 500) or higher (max 3000). In developping countries, the survey was generally realized by face-to-face interveiw but in most developped countries (and also through time) most surveys has been realized by phone or eventually on the internet. All details on the [country specific methodology by year](https://www.pewresearch.org/methods/feature/international-methodology/all-survey/all-country/all-year/) are available and provide very usefull information on the technical and political  difficulties of realization of the survey and the related margin of errors.
+
+```{r, echo=FALSE, fig.width=5,fig.cap= "Example of sampling methodology of PGAS" }
+knitr::include_graphics("media/sample_rus_2019.jpg")
+```
+
+
+
+### Availability of indicators by waves
+
+The table below indicates for each question the waves where it has been used. 
 
 
 ```{r, echo=FALSE}
@@ -83,9 +96,9 @@ kable(tot, caption ="Countries investigated by waves of survey")
 
 These table deserve a lot of comment as it reveals at the same time (1) the evolution of choices made by the PGAS in their coverage of the world opinion, but also (2) the geopolitical constraints that made possible or not the realization of the survey in the target countries. Just a few examples, before a more precise investigation :
 
-- The countries that has been the most present in the 22 waves are all members of "the Western" (Germany, France, UK, Spain, Japan, Poland) and can be considered as "friends" of the US.
+- The countries that has been the most present in the 22 waves are  members of "the Western" (Germany, France, UK, Spain, Japan, Poland) and can be considered as "friends" of the US. The US themselves has not been investogated in the final period 2021-2023, probably because the questions asked in PGAS are also asked in other national surveys of the Pew Research Center (PRC). It is certainly possible to find the data for these years elsewhere on the website of the PRC.  
 
-- The only exception to the previous rule is Russia which is systematically investigated from 2002 to 2015 but not in 2016. Then present again in 2017-2019 but not after. We can imagine that the possibility to realize surveys in Russia became more difficult after the first war of Ukraine (2014) and impossible with the beginning of the Covid crisis (2020)
+- Russia has been systematically investigated from 2002 to 2015 but not in 2016. Then present again in 2017-2019 but not after. We can imagine that the possibility to realize surveys in Russia became more difficult after the first war of Ukraine (2014) and impossible with the beginning of the Covid crisis (2020)
 
 - China was investigated in 2002 and in 2005-2016 but never after this period of time. As in the case of Russia, we can imagine that it became difficult and finally impossible to realize surveys in these country after the designation of Xi Jiping as head of state in 2013.
 
@@ -95,6 +108,13 @@ These table deserve a lot of comment as it reveals at the same time (1) the evol
 
 - etc.
 
-From statistical point of view we should just keep in the moment that the survey has been realized at least one time in 70 countries of the world. But only a minority of them are likely to be used for the analysis of trends over long period of time. 
+From statistical point of view we should just keep in the moment that the survey has been realized at least one time in 70 countries of the world. But only a minority of them are likely to be used for the analysis of trends over long period of time.  
+
+
+## Conclusion : the core period of interest is 2007-2019
+
+Looking at the availability of data by indicator and by survey, it appears clearly that **the most favorable period of observation for the analysis of opinion dynamics is 2007-2019**. In 2002-2006, many indicators was not avaiblable or many countries of interest was missing. And in 2020-23, the covid crisis and the increase of geopolitical conflicts between "North" and "South" has limited the possibilities to launch surveys in countries of major interest like China or Russia.
+
+
 
 
