@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -123,10 +157,19 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#five-indicators-for-long-time-series" id="toc-five-indicators-for-long-time-series" class="nav-link" data-scroll-target="#five-indicators-for-long-time-series">Five indicators for long time series</a>
   <ul class="collapse">
   <li><a href="#sample-design-by-country-and-year" id="toc-sample-design-by-country-and-year" class="nav-link" data-scroll-target="#sample-design-by-country-and-year">Sample design by country and year</a></li>
+  <li><a href="#definition-of-indicators" id="toc-definition-of-indicators" class="nav-link" data-scroll-target="#definition-of-indicators">Definition of indicators</a></li>
   <li><a href="#availability-of-indicators-by-waves" id="toc-availability-of-indicators-by-waves" class="nav-link" data-scroll-target="#availability-of-indicators-by-waves">Availability of indicators by waves</a></li>
   </ul></li>
-  <li><a href="#states-investigated-sta" id="toc-states-investigated-sta" class="nav-link" data-scroll-target="#states-investigated-sta">States investigated (<em>sta</em>)</a></li>
-  <li><a href="#conclusion-the-core-period-of-interest-is-2007-2019" id="toc-conclusion-the-core-period-of-interest-is-2007-2019" class="nav-link" data-scroll-target="#conclusion-the-core-period-of-interest-is-2007-2019">Conclusion : the core period of interest is 2007-2019</a></li>
+  <li><a href="#spatial-coverage" id="toc-spatial-coverage" class="nav-link" data-scroll-target="#spatial-coverage">Spatial coverage</a>
+  <ul class="collapse">
+  <li><a href="#country-covered-by-the-survey" id="toc-country-covered-by-the-survey" class="nav-link" data-scroll-target="#country-covered-by-the-survey">Country covered by the survey</a></li>
+  <li><a href="#map-of-spatial-coverage" id="toc-map-of-spatial-coverage" class="nav-link" data-scroll-target="#map-of-spatial-coverage">Map of spatial coverage</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#the-core-period-of-interest-is-2007-2019" id="toc-the-core-period-of-interest-is-2007-2019" class="nav-link" data-scroll-target="#the-core-period-of-interest-is-2007-2019">The core period of interest is 2007-2019</a></li>
+  <li><a href="#the-most-interesting-opinions-are-about-usa-china-russia-eu-and-un" id="toc-the-most-interesting-opinions-are-about-usa-china-russia-eu-and-un" class="nav-link" data-scroll-target="#the-most-interesting-opinions-are-about-usa-china-russia-eu-and-un">The most interesting opinions are about USA, China, Russia, EU and UN</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -152,6 +195,11 @@ ul.task-list li input[type="checkbox"] {
 
 <p>The data used in our analysis has been extracted from the website of the Pew Research Center where they can be freely downloaded. They are more precisely extraction from the Pew Global Attitude Survey from 2002 to present (2023).</p>
 <p>After briefly presenting the source, we will explain the different steps of harmonization that we have realized to obtain a continuous time series of international opinion.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE</code></pre>
+</div>
+</div>
 <section id="the-pew-global-attitude-survey-pgas" class="level2">
 <h2 class="anchored" data-anchor-id="the-pew-global-attitude-survey-pgas">The Pew Global Attitude Survey (PGAS)</h2>
 <p>The PGAS is not exactly a pure scientific survey as the World Value Survey or the European Value Survey. It is enhanced in a long history as explained by a blog published on th website “Knowledge for Policy” of EU some years ago.</p>
@@ -167,16 +215,82 @@ ul.task-list li input[type="checkbox"] {
 <section id="sample-design-by-country-and-year" class="level3">
 <h3 class="anchored" data-anchor-id="sample-design-by-country-and-year">Sample design by country and year</h3>
 <p>The time period (<em>wav</em>), the country investigated in the survey (<em>sta</em>) and the <em>sex</em> or <em>age</em> of the respondent are classical dimension that are used to frame the survey and choose the samples. Combined with a variable list of other framing indicators (education, urban-rural, income, …) they make possible to correct the samples by a weighting criteria (<em>weight</em>) which insure an adequation with the full population of the countries. In the majority of countries and time period, the sample size was about 1000 people, but can be sometimes lower (min = 500) or higher (max 3000). In developping countries, the survey was generally realized by face-to-face interveiw but in most developped countries (and also through time) most surveys has been realized by phone or eventually on the internet. All details on the <a href="https://www.pewresearch.org/methods/feature/international-methodology/all-survey/all-country/all-year/">country specific methodology by year</a> are available and provide very usefull information on the technical and political difficulties of realization of the survey and the related margin of errors.</p>
-<div class="cell">
-<div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="media/sample_rus_2019.jpg" class="img-fluid figure-img"></p>
+<p><img src="media/sample_rus_2019.jpg" class="img-fluid figure-img" width="700"></p>
 <figcaption class="figure-caption">Example of sampling methodology of PGAS</figcaption>
 </figure>
 </div>
+</section>
+<section id="definition-of-indicators" class="level3">
+<h3 class="anchored" data-anchor-id="definition-of-indicators">Definition of indicators</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(don,<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        wav sta       wgt    sex age                rel            opi_USA
+617341 2023 ZAF 1.8703222   Male  22     Very important   Very unfavorable
+617342 2023 ZAF 1.0502763   Male  24 Somewhat important Somewhat favorable
+617343 2023 ZAF 0.3254254   Male  39     Very important   Very unfavorable
+617344 2023 ZAF 2.4937630   Male  28     Very important                 DK
+617345 2023 ZAF 0.7725435 Female  24     Very important Somewhat favorable
+                  opi_CHN            opi_RUS             opi_UN
+617341     Very favorable     Very favorable     Very favorable
+617342     Very favorable Somewhat favorable Somewhat favorable
+617343   Very unfavorable   Very unfavorable   Very unfavorable
+617344   Very unfavorable   Very unfavorable                 DK
+617345 Somewhat favorable Somewhat favorable Somewhat favorable
+                   opi_EU opi_IRN opi_DEU opi_FRA opi_JPN            opi_IND
+617341     Very favorable    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;     Very favorable
+617342 Somewhat favorable    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt; Somewhat favorable
+617343   Very unfavorable    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;   Very unfavorable
+617344   Very unfavorable    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt; Somewhat favorable
+617345 Somewhat favorable    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt;    &lt;NA&gt; Somewhat favorable
+                  opi_TWN opi_BRA
+617341     Very favorable    &lt;NA&gt;
+617342 Somewhat favorable    &lt;NA&gt;
+617343                 DK    &lt;NA&gt;
+617344                 DK    &lt;NA&gt;
+617345 Somewhat favorable    &lt;NA&gt;</code></pre>
 </div>
 </div>
+<ul>
+<li><p><strong>wav</strong> : the year where the survey has been realized. The precise period of time is indicated in <a href="https://www.pewresearch.org/methods/feature/international-methodology/all-survey/all-country/all-year/">the country specific methodology by year</a>. The majority of surveys has been realized in Spring.</p></li>
+<li><p><strong>sta</strong> : the state where the survey was realized. We use here the ISO3 code as reference in order to make more easy the cartography or the linkage with other data sources.</p></li>
+<li><p><strong>wgt</strong> : the weight of observation that should be used to balance bias in the sample and obtain better estimates of values for each country and each year. This information was lost for some countries in 2002 and was therefore made equal to 1.</p></li>
+<li><p><strong>sex</strong> : the sex of the person that answered. The Pew Research Center does not offer alternative answers for non binary people. It is generally not asked but directly recorded by the person in charge of the inquiries.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/quest_sex.jpg" class="img-fluid figure-img" width="600"></p>
+<figcaption class="figure-caption">Question on sex</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>rel</strong> : the question about the importance of religion in the life of the respondent take the form of a scale with four ordered levels. The formulation has remained strictly the same over time which insure good quality of comparison. This question has been generally asked in all countries until 2015. But they were later some exceptions, in particular in countries of Europe like France, Germany or UK.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/quest_rel.jpg" class="img-fluid figure-img" width="600"></p>
+<figcaption class="figure-caption">Question on religion</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>opi_xxx</strong> : this central question is much more complex than the previous one because it is a battery of questions about different countries but also sometimes different people, different organisation or even different religions. The general rule is to start by the question about the opinion of USA (and eventually “Americans”) and then to propose the other items in a random order. It suggest that USA/Americans are used as a reference around which we can measure positive or negative deviations. Another important complication with this question is the fact that some items are proposed to all countries under investigation but other are only asked in selected countries. In this case, we are oblige to admit that the comparison will be biased because the full list of items has a systemic influence on the results about each item. As an example, consider the formulation of the question in the waves of 2009 an 2019.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/quest_opi_country_2009.jpg" class="img-fluid figure-img" width="600"></p>
+<figcaption class="figure-caption">Question on opinion about countries in 2009</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/quest_opi_country_2019.jpg" class="img-fluid figure-img" width="600"></p>
+<figcaption class="figure-caption">Question on opinion about countries in 2019</figcaption>
+</figure>
+</div>
+<p>The wording of the question is the same and the ordinal scale at four level is equivalent, but the fact that the list of items has changed introduce a difficulty in the analysis of the results, even if we decide to focus only the items that are present in the two waves (USA, China, Russia, EU, UN). In 2009, the evaluation is influenced by questions about religions which is not the case in 2019. Even if we consider a single year like 2019, the fact that NATO or Germany are added to the items in Europe but not in other countries of the world will probably modify the answers about Russia.</p>
+<p>Considering the difficulties induced by the halo effect, we have decided to limit our selection of answers to the items that (1) has been asked to all countries and (2) the item that are about states or regional organization but not about peoples or religions. We will therefore not keep the answers about Germany and NATO in 2019 and no more consider the answers about Americans, Jews, Christians or Muslims in 2019.</p>
 </section>
 <section id="availability-of-indicators-by-waves" class="level3">
 <h3 class="anchored" data-anchor-id="availability-of-indicators-by-waves">Availability of indicators by waves</h3>
@@ -644,9 +758,11 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </section>
 </section>
-<section id="states-investigated-sta" class="level2">
-<h2 class="anchored" data-anchor-id="states-investigated-sta">States investigated (<em>sta</em>)</h2>
+<section id="spatial-coverage" class="level2">
+<h2 class="anchored" data-anchor-id="spatial-coverage">Spatial coverage</h2>
 <p>There is a great variability in the list and number of states that was investigated by the PGAS. Generally speaking the number of states investigated was more important for the odd-numbered years with a larger extension toward developping countries from the South. The even-numberd years was generally characterised by a lower number of countries and a focus on rich countries from the North. But they are many exceptions to this rule.</p>
+<section id="country-covered-by-the-survey" class="level3">
+<h3 class="anchored" data-anchor-id="country-covered-by-the-survey">Country covered by the survey</h3>
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -2567,11 +2683,29 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>From statistical point of view we should just keep in the moment that the survey has been realized at least one time in 70 countries of the world. But only a minority of them are likely to be used for the analysis of trends over long period of time.</p>
 </section>
-<section id="conclusion-the-core-period-of-interest-is-2007-2019" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion-the-core-period-of-interest-is-2007-2019">Conclusion : the core period of interest is 2007-2019</h2>
+<section id="map-of-spatial-coverage" class="level3">
+<h3 class="anchored" data-anchor-id="map-of-spatial-coverage">Map of spatial coverage</h3>
+<p>To offer a better idea of the geographical selection of countries made by the PGAS, it is interesting to propose a map, describing the countries that has been covered or not and the number of waves where they was present.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Looking at the map, it appears very clearly an uneven spatial distribution with very spare coverage in Africa or central Asia as compared to Americas, Europa and Southern or Eastern Asia. The PGAS will therefore not offer a perfect basis for the analysis of the evolution of global opinion in the world. But it makes nevertheless possible to explore some great tendencies in all part of the worlds between 2002 and 2023.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<section id="the-core-period-of-interest-is-2007-2019" class="level3">
+<h3 class="anchored" data-anchor-id="the-core-period-of-interest-is-2007-2019">The core period of interest is 2007-2019</h3>
 <p>Looking at the availability of data by indicator and by survey, it appears clearly that <strong>the most favorable period of observation for the analysis of opinion dynamics is 2007-2019</strong>. In 2002-2006, many indicators was not avaiblable or many countries of interest was missing. And in 2020-23, the covid crisis and the increase of geopolitical conflicts between “North” and “South” has limited the possibilities to launch surveys in countries of major interest like China or Russia.</p>
+</section>
+<section id="the-most-interesting-opinions-are-about-usa-china-russia-eu-and-un" class="level3">
+<h3 class="anchored" data-anchor-id="the-most-interesting-opinions-are-about-usa-china-russia-eu-and-un">The most interesting opinions are about USA, China, Russia, EU and UN</h3>
+<p>Now, considering the distribution of opinions at different periods of time and in different samples of countries, it appears that <strong>only USA, China and Russia are covered on a long period, eventually completed by EU and UN</strong>. The opinions about other countries (Germany, France, Japan, India, …) are only been asked to all countries in some waves. We could eventually add some information in the case of waves where the opinion of this countries has been asked to subsamples. But we prefer to exclud this partial informations.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

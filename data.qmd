@@ -11,6 +11,8 @@ After briefly presenting the source, we will explain the different steps of harm
 library(dplyr,warn.conflicts = F, quietly=T)
 library(knitr)
 library(reshape2)
+library(sf)
+library(mapsf)
 don<-readRDS("data/pew_all_opi.RDS") %>% rename(rel = opi_rel)
 ```
 
@@ -38,11 +40,41 @@ From 2002 to 2023, 22 waves of the PGAS has been realized and the majority of qu
 
 The time period (*wav*), the country investigated in the survey (*sta*) and the *sex* or *age* of the respondent are classical dimension that are used to frame the survey and choose the samples. Combined with a variable list of other framing indicators (education, urban-rural, income, ...) they make possible to correct the samples by a weighting criteria (*weight*) which insure an adequation with the full population of the countries. In the majority of countries and time period, the sample size was about 1000 people, but can be sometimes lower (min = 500) or higher (max 3000). In developping countries, the survey was generally realized by face-to-face interveiw but in most developped countries (and also through time) most surveys has been realized by phone or eventually on the internet. All details on the [country specific methodology by year](https://www.pewresearch.org/methods/feature/international-methodology/all-survey/all-country/all-year/) are available and provide very usefull information on the technical and political  difficulties of realization of the survey and the related margin of errors.
 
-```{r, echo=FALSE, fig.width=5,fig.cap= "Example of sampling methodology of PGAS" }
-knitr::include_graphics("media/sample_rus_2019.jpg")
+![Example of sampling methodology of PGAS](media/sample_rus_2019.jpg){width=700}
+
+
+### Definition of indicators
+
+```{r}
+tail(don,5)
 ```
 
 
+- **wav** : the year where the survey has been realized. The precise period of time is indicated in [the country specific methodology by year](https://www.pewresearch.org/methods/feature/international-methodology/all-survey/all-country/all-year/). The majority of surveys has been realized in Spring. 
+
+- **sta** : the state where the survey was realized. We use here the ISO3 code as reference in order to make more easy the cartography or the linkage with other data sources.
+
+- **wgt** : the weight of observation that should be used to balance bias in the sample and obtain better estimates of values for each country and each year. This information was lost for some countries in 2002 and was therefore made equal to 1. 
+
+- **sex** : the sex of the person that answered. The Pew Research Center does not offer alternative answers for non binary people. It is generally not asked but directly recorded by the person in charge of the inquiries. 
+
+![Question on sex](media/quest_sex.jpg){width=600}
+
+- **rel** : the question about the importance of religion in the life of the respondent take the form of a scale with four ordered levels. The formulation has remained strictly the same over time which insure good quality of comparison. This question has been generally asked in all countries until 2015. But they were later some exceptions, in particular in countries of Europe like France, Germany or UK. 
+
+![Question on religion](media/quest_rel.jpg){width=600}
+
+- **opi_xxx** : this central question is much more complex than the previous one because it is a battery of questions about different countries but also sometimes different people, different organisation or even different religions. The general rule is to start by the question about the opinion of USA (and eventually "Americans") and then to propose the other items in a random order. It suggest that USA/Americans are used as a reference around which we can measure positive or negative deviations. Another important complication with this question is the fact that some items are proposed to all countries under investigation but other are only asked in selected countries. In this case, we are oblige to admit that the comparison will be biased because the full list of items has a systemic influence on the results about each item. As an example, consider the formulation of the question in the waves of 2009 an 2019.
+
+![Question on opinion about countries in 2009](media/quest_opi_country_2009.jpg){width=600}
+
+
+
+![Question on opinion about countries in 2019](media/quest_opi_country_2019.jpg){width=600}
+
+The wording of the question is the same and the ordinal scale at four level is equivalent, but the fact that the list of items has changed introduce a difficulty in the analysis of the results, even if we decide to focus only the items that are present in the two waves (USA, China, Russia, EU, UN). In 2009, the evaluation is influenced by questions about religions which is not the case in 2019. Even if we consider a single year like 2019, the fact that NATO or Germany are added to the items in Europe but not in other countries of the world will probably modify the answers about Russia.
+
+Considering the difficulties induced by the halo effect, we have decided to limit our selection of answers to the items that (1) has been asked to all countries and (2) the item that are about states or regional organization but not about peoples or religions. We will therefore not keep the answers about Germany and NATO in 2019 and no more consider the answers about Americans, Jews, Christians or Muslims in 2019.
 
 ### Availability of indicators by waves
 
@@ -75,9 +107,12 @@ colnames(mat0)<-colnames(mat)
 kable(t(mat0), caption= "Availability of indicator by waves of survey")
 ```
 
-## States investigated (*sta*)
+## Spatial coverage 
 
 There is a great variability in the list and number of states that was investigated by the PGAS. Generally speaking the number of states investigated was more important for the odd-numbered years with a larger extension toward developping countries from the South. The even-numberd years was generally characterised by a lower number of countries and a focus on rich countries from the North. But they are many exceptions to this rule. 
+
+
+### Country covered by the survey
 
 ```{r, echo = FALSE}
 tab<-don %>% group_by(sta, wav) %>% count()
@@ -110,10 +145,49 @@ These table deserve a lot of comment as it reveals at the same time (1) the evol
 
 From statistical point of view we should just keep in the moment that the survey has been realized at least one time in 70 countries of the world. But only a minority of them are likely to be used for the analysis of trends over long period of time.  
 
+### Map of spatial coverage
 
-## Conclusion : the core period of interest is 2007-2019
+To offer a better idea of the geographical selection of countries made by the PGAS, it is interesting to propose a map, describing the countries that has been covered or not and the number of waves where they was present.
+
+```{r, echo=FALSE, warning = FALSE, message=FALSE}
+map <- readRDS("data/world_map.Rdata")
+map<-st_make_valid(map)
+tab<-data.frame(row.names(tot),tot[,23])[-1,]
+names(tab)<-c("ISO3","nbwav")
+map<-left_join(map,tab)
+map$ok<-as.factor(is.na(map$nbwav)==F)
+levels(map$ok) <- c("No"," Yes")
+mf_init(theme = "agolalight",x = map)
+mf_map(map, type="typo", var="ok",
+       pal=c("lightgray","white"), 
+       leg_title = "Covered",
+       leg_pos = "topleft",
+       add=T)
+mf_map(map, type="prop",
+       var="nbwav",
+       leg_title = "Nb. of waves",
+       leg_pos = "topright",
+       inches=0.1)
+mf_layout(title = "Countries covered by the Global Attitude Survey (2002-2023)",
+          credits = "(c) Grasland C., 2024, WorldRegio Project",
+          scale = F, arrow= F,frame = T     )
+```
+
+Looking at the map, it appears very clearly an uneven spatial distribution with very spare coverage in Africa or central Asia as compared to Americas, Europa and Southern or Eastern Asia. The PGAS will therefore not offer a perfect basis for the analysis of the evolution of global opinion in the world. But it makes nevertheless possible to explore some great tendencies in all part of the worlds between 2002 and 2023. 
+
+
+
+
+## Conclusion 
+
+### The core period of interest is 2007-2019
 
 Looking at the availability of data by indicator and by survey, it appears clearly that **the most favorable period of observation for the analysis of opinion dynamics is 2007-2019**. In 2002-2006, many indicators was not avaiblable or many countries of interest was missing. And in 2020-23, the covid crisis and the increase of geopolitical conflicts between "North" and "South" has limited the possibilities to launch surveys in countries of major interest like China or Russia.
+
+### The most interesting opinions are about USA, China, Russia, EU and UN
+
+Now, considering the distribution of opinions at different periods of time and in different samples of countries, it appears that **only USA, China and Russia are covered on a long period, eventually completed by EU and UN**. The opinions about other countries (Germany, France, Japan, India, ...) are only been asked to all countries in some waves. We could eventually add some information in the case of waves where the opinion of this countries has been asked to subsamples. But we prefer to exclud this partial informations. 
+
 
 
 
