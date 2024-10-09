@@ -1,0 +1,2322 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>World Polarisation - Exploration of the opinions about USA, China and Russia</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="site_libs/scatterD3-binding-1.0.1/scatterD3.js"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">World Polarisation</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./author.html" rel="" target="">
+ <span class="menu-text">Author</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data.html" rel="" target="">
+ <span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./explo.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Exploration</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/worldregio/pew_opi" rel="" target="_blank"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#i.-evolution-of-the-opinion-of-uk-citizens-about-usa-2002-2023" id="toc-i.-evolution-of-the-opinion-of-uk-citizens-about-usa-2002-2023" class="nav-link active" data-scroll-target="#i.-evolution-of-the-opinion-of-uk-citizens-about-usa-2002-2023">I. Evolution of the opinion of UK citizens about USA (2002-2023)</a>
+  <ul class="collapse">
+  <li><a href="#data-selection" id="toc-data-selection" class="nav-link" data-scroll-target="#data-selection">Data selection</a></li>
+  <li><a href="#opinions-by-years" id="toc-opinions-by-years" class="nav-link" data-scroll-target="#opinions-by-years">Opinions by years</a></li>
+  <li><a href="#who-has-an-opinion" id="toc-who-has-an-opinion" class="nav-link" data-scroll-target="#who-has-an-opinion">Who has an opinion ?</a></li>
+  <li><a href="#polarisation-of-opinion" id="toc-polarisation-of-opinion" class="nav-link" data-scroll-target="#polarisation-of-opinion">Polarisation of opinion</a></li>
+  <li><a href="#balance-of-opinion." id="toc-balance-of-opinion." class="nav-link" data-scroll-target="#balance-of-opinion.">Balance of opinion.</a></li>
+  <li><a href="#trajectory-with-ca" id="toc-trajectory-with-ca" class="nav-link" data-scroll-target="#trajectory-with-ca">Trajectory with CA</a></li>
+  </ul></li>
+  <li><a href="#ii.-benchmarking-the-opinions-of-different-countries-about-usa-in-2007" id="toc-ii.-benchmarking-the-opinions-of-different-countries-about-usa-in-2007" class="nav-link" data-scroll-target="#ii.-benchmarking-the-opinions-of-different-countries-about-usa-in-2007">II. Benchmarking the opinions of different countries about USA in 2007</a>
+  <ul class="collapse">
+  <li><a href="#data-selection-1" id="toc-data-selection-1" class="nav-link" data-scroll-target="#data-selection-1">Data selection</a></li>
+  <li><a href="#opinions-by-country" id="toc-opinions-by-country" class="nav-link" data-scroll-target="#opinions-by-country">Opinions by country</a></li>
+  <li><a href="#who-has-an-opinion-1" id="toc-who-has-an-opinion-1" class="nav-link" data-scroll-target="#who-has-an-opinion-1">Who has an opinion ?</a></li>
+  <li><a href="#polarisation" id="toc-polarisation" class="nav-link" data-scroll-target="#polarisation">Polarisation</a></li>
+  <li><a href="#balance-of-favorable-and-unfavorable-opinions" id="toc-balance-of-favorable-and-unfavorable-opinions" class="nav-link" data-scroll-target="#balance-of-favorable-and-unfavorable-opinions">Balance of favorable and unfavorable opinions</a></li>
+  <li><a href="#mapping-with-ca" id="toc-mapping-with-ca" class="nav-link" data-scroll-target="#mapping-with-ca">Mapping with CA</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exploration of the opinions about USA, China and Russia</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'reshape2'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:tidyr':
+
+    smiths</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE</code></pre>
+</div>
+</div>
+<p>We have presented in a previous post the database that we have elaborated on the basis of the Global Attitude Survey in order to follow the evolution of world opinion about the three major powers that are USA, China and Russia.</p>
+<p>Before to develop more sophisticated analysis on polarisation, we will try here to propose simple explorations of data in order to check the quality and shortcomings of the data.</p>
+<p>We remind briefly the structure of the database of 617345 observation and 18 variables.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 1%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">wav</th>
+<th style="text-align: left;">sta</th>
+<th style="text-align: right;">wgt</th>
+<th style="text-align: left;">sex</th>
+<th style="text-align: right;">age</th>
+<th style="text-align: left;">opi_rel</th>
+<th style="text-align: left;">opi_USA</th>
+<th style="text-align: left;">opi_CHN</th>
+<th style="text-align: left;">opi_RUS</th>
+<th style="text-align: left;">opi_UN</th>
+<th style="text-align: left;">opi_EU</th>
+<th style="text-align: left;">opi_IRN</th>
+<th style="text-align: left;">opi_DEU</th>
+<th style="text-align: left;">opi_FRA</th>
+<th style="text-align: left;">opi_JPN</th>
+<th style="text-align: left;">opi_IND</th>
+<th style="text-align: left;">opi_TWN</th>
+<th style="text-align: left;">opi_BRA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">617342</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">ZAF</td>
+<td style="text-align: right;">1.0502763</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">Somewhat important</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Very favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">617343</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">ZAF</td>
+<td style="text-align: right;">0.3254254</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: left;">Very important</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">DK</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">617344</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">ZAF</td>
+<td style="text-align: right;">2.4937630</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: left;">Very important</td>
+<td style="text-align: left;">DK</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">DK</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">DK</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">617345</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">ZAF</td>
+<td style="text-align: right;">0.7725435</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">Very important</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="i.-evolution-of-the-opinion-of-uk-citizens-about-usa-2002-2023" class="level2">
+<h2 class="anchored" data-anchor-id="i.-evolution-of-the-opinion-of-uk-citizens-about-usa-2002-2023">I. Evolution of the opinion of UK citizens about USA (2002-2023)</h2>
+<p>Let’s take a example the evolution of the evolution of the opinion of inhabitants of one country about another. We will use the case of the opinion of UK citizens on USA as it is one case where the survey has been realized every year from 2002 to 2023. In the majority of case, we don’t have complete time series.</p>
+<section id="data-selection" class="level3">
+<h3 class="anchored" data-anchor-id="data-selection">Data selection</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      wav            wgt              sex             age       
+ Min.   :2002   Min.   :0.05043   Female: 9707   Min.   :18.00  
+ 1st Qu.:2009   1st Qu.:0.60548   Male  :10161   1st Qu.:36.00  
+ Median :2014   Median :0.94839                  Median :52.00  
+ Mean   :2014   Mean   :1.00422                  Mean   :50.97  
+ 3rd Qu.:2019   3rd Qu.:1.11110                  3rd Qu.:65.00  
+ Max.   :2023   Max.   :5.70402                  Max.   :97.00  
+                   opi      
+ Very favorable      :2455  
+ Somewhat favorable  :9061  
+ Somewhat unfavorable:4735  
+ Very unfavorable    :2092  
+ DK                  :1429  
+ Refused             :  96  </code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">wav</th>
+<th style="text-align: right;">wgt</th>
+<th style="text-align: left;">sex</th>
+<th style="text-align: right;">age</th>
+<th style="text-align: left;">opi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">0.893</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: left;">Somewhat favorable</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">1.039</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: left;">Somewhat unfavorable</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">0.893</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: left;">Somewhat unfavorable</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">0.956</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: left;">Very favorable</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">1.094</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: left;">Somewhat favorable</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">0.955</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">Somewhat favorable</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="opinions-by-years" class="level3">
+<h3 class="anchored" data-anchor-id="opinions-by-years">Opinions by years</h3>
+<p>Keeping all modalities of answer, we can create a weighted table of answers with as many lines as wawes of wurvey and as many columns as possibilities of choices.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Opinions of UK on USA (raw count)</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 16%">
+<col style="width: 21%">
+<col style="width: 23%">
+<col style="width: 19%">
+<col style="width: 4%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">wav</th>
+<th style="text-align: right;">Very favorable</th>
+<th style="text-align: right;">Somewhat favorable</th>
+<th style="text-align: right;">Somewhat unfavorable</th>
+<th style="text-align: right;">Very unfavorable</th>
+<th style="text-align: right;">DK</th>
+<th style="text-align: right;">Refused</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">134</td>
+<td style="text-align: right;">239</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">258</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">214</td>
+<td style="text-align: right;">122</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">314</td>
+<td style="text-align: right;">202</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">403</td>
+<td style="text-align: right;">181</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2007</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">410</td>
+<td style="text-align: right;">288</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">335</td>
+<td style="text-align: right;">187</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2009</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">418</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2010</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2011</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">483</td>
+<td style="text-align: right;">217</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">109</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">505</td>
+<td style="text-align: right;">244</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">484</td>
+<td style="text-align: right;">215</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2014</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">530</td>
+<td style="text-align: right;">192</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2015</td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">474</td>
+<td style="text-align: right;">167</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">678</td>
+<td style="text-align: right;">294</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">371</td>
+<td style="text-align: right;">289</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2018</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">364</td>
+<td style="text-align: right;">262</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right;">410</td>
+<td style="text-align: right;">269</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">314</td>
+<td style="text-align: right;">326</td>
+<td style="text-align: right;">208</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">517</td>
+<td style="text-align: right;">211</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">184</td>
+<td style="text-align: right;">643</td>
+<td style="text-align: right;">315</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">458</td>
+<td style="text-align: right;">281</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can easily transform the table in percentage for a better visualisation of the probability of opinion of each type :</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Opinions of UK on USA (%)</caption>
+<colgroup>
+<col style="width: 5%">
+<col style="width: 16%">
+<col style="width: 21%">
+<col style="width: 23%">
+<col style="width: 18%">
+<col style="width: 5%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Very favorable</th>
+<th style="text-align: right;">Somewhat favorable</th>
+<th style="text-align: right;">Somewhat unfavorable</th>
+<th style="text-align: right;">Very unfavorable</th>
+<th style="text-align: right;">DK</th>
+<th style="text-align: right;">Refused</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2002</td>
+<td style="text-align: right;">26.7</td>
+<td style="text-align: right;">47.8</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2003</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">51.7</td>
+<td style="text-align: right;">13.6</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2004</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">42.8</td>
+<td style="text-align: right;">24.4</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2005</td>
+<td style="text-align: right;">12.1</td>
+<td style="text-align: right;">42.2</td>
+<td style="text-align: right;">27.2</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2006</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">45.1</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">13.1</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2007</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">41.8</td>
+<td style="text-align: right;">29.4</td>
+<td style="text-align: right;">12.7</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2008</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">45.3</td>
+<td style="text-align: right;">25.3</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2009</td>
+<td style="text-align: right;">12.8</td>
+<td style="text-align: right;">56.4</td>
+<td style="text-align: right;">14.2</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2010</td>
+<td style="text-align: right;">14.2</td>
+<td style="text-align: right;">51.6</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2011</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">48.7</td>
+<td style="text-align: right;">21.8</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2012</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">49.7</td>
+<td style="text-align: right;">24.0</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2013</td>
+<td style="text-align: right;">10.0</td>
+<td style="text-align: right;">48.7</td>
+<td style="text-align: right;">21.7</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2014</td>
+<td style="text-align: right;">13.0</td>
+<td style="text-align: right;">53.0</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2015</td>
+<td style="text-align: right;">16.0</td>
+<td style="text-align: right;">49.7</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">9.5</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2016</td>
+<td style="text-align: right;">13.9</td>
+<td style="text-align: right;">47.2</td>
+<td style="text-align: right;">20.5</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2017</td>
+<td style="text-align: right;">13.2</td>
+<td style="text-align: right;">36.2</td>
+<td style="text-align: right;">28.2</td>
+<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2018</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">37.4</td>
+<td style="text-align: right;">26.9</td>
+<td style="text-align: right;">16.0</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2019</td>
+<td style="text-align: right;">16.5</td>
+<td style="text-align: right;">41.2</td>
+<td style="text-align: right;">27.1</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2020</td>
+<td style="text-align: right;">9.2</td>
+<td style="text-align: right;">32.4</td>
+<td style="text-align: right;">33.6</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2021</td>
+<td style="text-align: right;">11.4</td>
+<td style="text-align: right;">52.3</td>
+<td style="text-align: right;">21.3</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2022</td>
+<td style="text-align: right;">14.6</td>
+<td style="text-align: right;">50.9</td>
+<td style="text-align: right;">24.9</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2023</td>
+<td style="text-align: right;">13.0</td>
+<td style="text-align: right;">45.8</td>
+<td style="text-align: right;">28.1</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can now produce different time series according to our hypothesis on the phenomena under investigation.</p>
+</section>
+<section id="who-has-an-opinion" class="level3">
+<h3 class="anchored" data-anchor-id="who-has-an-opinion">Who has an opinion ?</h3>
+<p>We can firstly investigate the % of people that refused to answer or did not made a choice.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explo_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As we can see the evolution of this parameter is characterized by a slow increase of people without opinion between 2002 and 2016, between 8 and 10% of the sample. But after the election of D. Trump in 2017, the proportion of people without opinion declined dramatically to less than 5 % and the election of J. Biden did not modify the situation.</p>
+</section>
+<section id="polarisation-of-opinion" class="level3">
+<h3 class="anchored" data-anchor-id="polarisation-of-opinion">Polarisation of opinion</h3>
+<p>This first results are in line with another analysis related to the choice of extreme situation of the Likert scale. The figure below indicates the proportion of people that has chosen the answers “very favorable” or “very unfavorable”.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explo_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We notice here a high polarisation in 2002 (probably in relation with September 11 and the “war to terrorism” of G.W. Bush). But we reach the lowest level of polarisation in 2010-2014 during the presidency of B.Obama. The polarisation increase slowly during the second presidency of Obama and dramatically with the election of D. Trump. J. Biden election is characterized by a reduction of polarisation.</p>
+</section>
+<section id="balance-of-opinion." class="level3">
+<h3 class="anchored" data-anchor-id="balance-of-opinion.">Balance of opinion.</h3>
+<p>We use here the classical index of attraction-repulsion <span class="math inline">\(I\)</span> to evaluate the balance of positive and negative opinion.</p>
+<p><span class="math inline">\(I = \frac{Favorable-Unfavorable}{Favorable+Unfavorable}\)</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explo_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Finally we can produce the classical diagram of the sum of favorable opinion that reveals expected correlation with the different presidents of the US. But this figure is only one component of the analysis and the two previous one about opinion and polarisation are certainly as much important.</p>
+</section>
+<section id="trajectory-with-ca" class="level3">
+<h3 class="anchored" data-anchor-id="trajectory-with-ca">Trajectory with CA</h3>
+<p>We can use a <strong>correspondance analysis</strong> in order to visualize the general trajectory of opinions (excluding answers of people that refused or did not answer). The advantage of this statisticial method is to provide a good picture of the period of change or stability of opinion and to identify the most important turning points.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="scatterD3 html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-28270bc83ff471e18f24" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-28270bc83ff471e18f24">{"x":{"data":{"x":[-0.157,-0.122,0.181,0.35,-0.387,-0.15,0.015,0.102,0.062,0.193,0.123,-0.25,-0.197,-0.104,-0.05,-0.063,-0.142,-0.193,-0.123,0.179,0.245,0.077,0.47,-0.038,-0.08500000000000001,0.051],"y":[0.198,-0.055,-0.025,0.056,0.333,0.13,0.07199999999999999,0.004,-0.008,-0.068,-0.121,-0.068,-0.019,-0.07000000000000001,-0.109,-0.103,-0.046,0.048,0.005,0.08,0.064,0.119,0.05,-0.065,-0.013,-0.008],"lab":["Very favorable","Somewhat favorable","Somewhat unfavorable","Very unfavorable","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023"],"col_var":["Column","Column","Column","Column","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row"],"size_var":[83.953,43.337,27.547,45.163,48.417,7.646000000000001,1.778,1.212,0.555,8.814,8.784000000000001,9.257999999999999,4.548,4.791,8.429,7.395,4.573,6.804,3.25,9.275,11.674,10.969,36.533,3.156,1.658,0.48],"type_var":["point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point"],"key_var":["Column-Very favorable","Column-Somewhat favorable","Column-Somewhat unfavorable","Column-Very unfavorable","Row-2002","Row-2003","Row-2004","Row-2005","Row-2006","Row-2007","Row-2008","Row-2009","Row-2010","Row-2011","Row-2012","Row-2013","Row-2014","Row-2015","Row-2016","Row-2017","Row-2018","Row-2019","Row-2020","Row-2021","Row-2022","Row-2023"],"tooltip_text":["<strong>Very favorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> -0.157<br /> <strong>Axis 2 :<\/strong> 0.198<br /> <strong>Squared cosinus:<\/strong> 0.991<br /> <strong>Contribution:<\/strong> 83.953<br /> <strong>Count:<\/strong> 2562","<strong>Somewhat favorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> -0.122<br /> <strong>Axis 2 :<\/strong> -0.055<br /> <strong>Squared cosinus:<\/strong> 0.973<br /> <strong>Contribution:<\/strong> 43.337<br /> <strong>Count:<\/strong> 9206","<strong>Somewhat unfavorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> 0.181<br /> <strong>Axis 2 :<\/strong> -0.025<br /> <strong>Squared cosinus:<\/strong> 0.82<br /> <strong>Contribution:<\/strong> 27.547<br /> <strong>Count:<\/strong> 4632","<strong>Very unfavorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> 0.35<br /> <strong>Axis 2 :<\/strong> 0.056<br /> <strong>Squared cosinus:<\/strong> 0.887<br /> <strong>Contribution:<\/strong> 45.163<br /> <strong>Count:<\/strong> 1979","<strong>2002<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.387<br /> <strong>Axis 2 :<\/strong> 0.333<br /> <strong>Squared cosinus:<\/strong> 0.999<br /> <strong>Contribution:<\/strong> 48.417<br /> <strong>Count:<\/strong> 456","<strong>2003<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.15<br /> <strong>Axis 2 :<\/strong> 0.13<br /> <strong>Squared cosinus:<\/strong> 0.553<br /> <strong>Contribution:<\/strong> 7.646<br /> <strong>Count:<\/strong> 475","<strong>2004<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.015<br /> <strong>Axis 2 :<\/strong> 0.072<br /> <strong>Squared cosinus:<\/strong> 0.751<br /> <strong>Contribution:<\/strong> 1.778<br /> <strong>Count:<\/strong> 460","<strong>2005<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.102<br /> <strong>Axis 2 :<\/strong> 0.004<br /> <strong>Squared cosinus:<\/strong> 0.828<br /> <strong>Contribution:<\/strong> 1.212<br /> <strong>Count:<\/strong> 688","<strong>2006<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.062<br /> <strong>Axis 2 :<\/strong> -0.008<br /> <strong>Squared cosinus:<\/strong> 0.211<br /> <strong>Contribution:<\/strong> 0.555<br /> <strong>Count:<\/strong> 799","<strong>2007<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.193<br /> <strong>Axis 2 :<\/strong> -0.068<br /> <strong>Squared cosinus:<\/strong> 0.977<br /> <strong>Contribution:<\/strong> 8.814<br /> <strong>Count:<\/strong> 909","<strong>2008<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.123<br /> <strong>Axis 2 :<\/strong> -0.121<br /> <strong>Squared cosinus:<\/strong> 0.966<br /> <strong>Contribution:<\/strong> 8.784<br /> <strong>Count:<\/strong> 666","<strong>2009<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.25<br /> <strong>Axis 2 :<\/strong> -0.068<br /> <strong>Squared cosinus:<\/strong> 0.859<br /> <strong>Contribution:<\/strong> 9.258<br /> <strong>Count:<\/strong> 667","<strong>2010<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.197<br /> <strong>Axis 2 :<\/strong> -0.019<br /> <strong>Squared cosinus:<\/strong> 1<br /> <strong>Contribution:<\/strong> 4.548<br /> <strong>Count:<\/strong> 668","<strong>2011<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.104<br /> <strong>Axis 2 :<\/strong> -0.07<br /> <strong>Squared cosinus:<\/strong> 0.874<br /> <strong>Contribution:<\/strong> 4.791<br /> <strong>Count:<\/strong> 878","<strong>2012<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.05<br /> <strong>Axis 2 :<\/strong> -0.109<br /> <strong>Squared cosinus:<\/strong> 0.873<br /> <strong>Contribution:<\/strong> 8.429<br /> <strong>Count:<\/strong> 928","<strong>2013<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.063<br /> <strong>Axis 2 :<\/strong> -0.103<br /> <strong>Squared cosinus:<\/strong> 0.997<br /> <strong>Contribution:<\/strong> 7.395<br /> <strong>Count:<\/strong> 874","<strong>2014<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.142<br /> <strong>Axis 2 :<\/strong> -0.046<br /> <strong>Squared cosinus:<\/strong> 0.942<br /> <strong>Contribution:<\/strong> 4.573<br /> <strong>Count:<\/strong> 929","<strong>2015<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.193<br /> <strong>Axis 2 :<\/strong> 0.048<br /> <strong>Squared cosinus:<\/strong> 0.996<br /> <strong>Contribution:<\/strong> 6.804<br /> <strong>Count:<\/strong> 856","<strong>2016<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.123<br /> <strong>Axis 2 :<\/strong> 0.005<br /> <strong>Squared cosinus:<\/strong> 0.931<br /> <strong>Contribution:<\/strong> 3.25<br /> <strong>Count:<\/strong> 1267","<strong>2017<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.179<br /> <strong>Axis 2 :<\/strong> 0.08<br /> <strong>Squared cosinus:<\/strong> 0.904<br /> <strong>Contribution:<\/strong> 9.275<br /> <strong>Count:<\/strong> 921","<strong>2018<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.245<br /> <strong>Axis 2 :<\/strong> 0.064<br /> <strong>Squared cosinus:<\/strong> 0.963<br /> <strong>Contribution:<\/strong> 11.674<br /> <strong>Count:<\/strong> 896","<strong>2019<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.077<br /> <strong>Axis 2 :<\/strong> 0.119<br /> <strong>Squared cosinus:<\/strong> 0.886<br /> <strong>Contribution:<\/strong> 10.969<br /> <strong>Count:<\/strong> 959","<strong>2020<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.47<br /> <strong>Axis 2 :<\/strong> 0.05<br /> <strong>Squared cosinus:<\/strong> 0.986<br /> <strong>Contribution:<\/strong> 36.533<br /> <strong>Count:<\/strong> 937","<strong>2021<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.038<br /> <strong>Axis 2 :<\/strong> -0.065<br /> <strong>Squared cosinus:<\/strong> 0.548<br /> <strong>Contribution:<\/strong> 3.156<br /> <strong>Count:<\/strong> 945","<strong>2022<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.085<br /> <strong>Axis 2 :<\/strong> -0.013<br /> <strong>Squared cosinus:<\/strong> 0.605<br /> <strong>Contribution:<\/strong> 1.658<br /> <strong>Count:<\/strong> 1233","<strong>2023<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.051<br /> <strong>Axis 2 :<\/strong> -0.008<br /> <strong>Squared cosinus:<\/strong> 0.347<br /> <strong>Contribution:<\/strong> 0.48<br /> <strong>Count:<\/strong> 968"]},"settings":{"x_log":false,"y_log":false,"labels_size":10,"labels_positions":"auto","point_size":56,"point_opacity":1,"opacities":null,"hover_size":1,"hover_opacity":null,"xlab":"Axis 1 (74.04%)","ylab":"Axis 2 (17.01%)","has_labels":true,"col_lab":"Position","col_continuous":false,"col_levels":null,"colors":null,"ellipses":false,"ellipses_data":[],"symbol_lab":"if (is.null(symbol_var)) NULL else var_data[, symbol_var]","symbol_levels":null,"symbols":null,"size_range":[52.5,700],"size_lab":"Contrib","sizes":null,"opacity_lab":"NULL","opacities.1":null,"unit_circle":false,"has_color_var":true,"has_symbol_var":false,"has_size_var":true,"has_opacity_var":false,"has_url_var":false,"has_legend":true,"has_tooltips":true,"tooltip_text":["<strong>Very favorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> -0.157<br /> <strong>Axis 2 :<\/strong> 0.198<br /> <strong>Squared cosinus:<\/strong> 0.991<br /> <strong>Contribution:<\/strong> 83.953<br /> <strong>Count:<\/strong> 2562","<strong>Somewhat favorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> -0.122<br /> <strong>Axis 2 :<\/strong> -0.055<br /> <strong>Squared cosinus:<\/strong> 0.973<br /> <strong>Contribution:<\/strong> 43.337<br /> <strong>Count:<\/strong> 9206","<strong>Somewhat unfavorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> 0.181<br /> <strong>Axis 2 :<\/strong> -0.025<br /> <strong>Squared cosinus:<\/strong> 0.82<br /> <strong>Contribution:<\/strong> 27.547<br /> <strong>Count:<\/strong> 4632","<strong>Very unfavorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> 0.35<br /> <strong>Axis 2 :<\/strong> 0.056<br /> <strong>Squared cosinus:<\/strong> 0.887<br /> <strong>Contribution:<\/strong> 45.163<br /> <strong>Count:<\/strong> 1979","<strong>2002<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.387<br /> <strong>Axis 2 :<\/strong> 0.333<br /> <strong>Squared cosinus:<\/strong> 0.999<br /> <strong>Contribution:<\/strong> 48.417<br /> <strong>Count:<\/strong> 456","<strong>2003<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.15<br /> <strong>Axis 2 :<\/strong> 0.13<br /> <strong>Squared cosinus:<\/strong> 0.553<br /> <strong>Contribution:<\/strong> 7.646<br /> <strong>Count:<\/strong> 475","<strong>2004<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.015<br /> <strong>Axis 2 :<\/strong> 0.072<br /> <strong>Squared cosinus:<\/strong> 0.751<br /> <strong>Contribution:<\/strong> 1.778<br /> <strong>Count:<\/strong> 460","<strong>2005<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.102<br /> <strong>Axis 2 :<\/strong> 0.004<br /> <strong>Squared cosinus:<\/strong> 0.828<br /> <strong>Contribution:<\/strong> 1.212<br /> <strong>Count:<\/strong> 688","<strong>2006<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.062<br /> <strong>Axis 2 :<\/strong> -0.008<br /> <strong>Squared cosinus:<\/strong> 0.211<br /> <strong>Contribution:<\/strong> 0.555<br /> <strong>Count:<\/strong> 799","<strong>2007<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.193<br /> <strong>Axis 2 :<\/strong> -0.068<br /> <strong>Squared cosinus:<\/strong> 0.977<br /> <strong>Contribution:<\/strong> 8.814<br /> <strong>Count:<\/strong> 909","<strong>2008<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.123<br /> <strong>Axis 2 :<\/strong> -0.121<br /> <strong>Squared cosinus:<\/strong> 0.966<br /> <strong>Contribution:<\/strong> 8.784<br /> <strong>Count:<\/strong> 666","<strong>2009<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.25<br /> <strong>Axis 2 :<\/strong> -0.068<br /> <strong>Squared cosinus:<\/strong> 0.859<br /> <strong>Contribution:<\/strong> 9.258<br /> <strong>Count:<\/strong> 667","<strong>2010<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.197<br /> <strong>Axis 2 :<\/strong> -0.019<br /> <strong>Squared cosinus:<\/strong> 1<br /> <strong>Contribution:<\/strong> 4.548<br /> <strong>Count:<\/strong> 668","<strong>2011<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.104<br /> <strong>Axis 2 :<\/strong> -0.07<br /> <strong>Squared cosinus:<\/strong> 0.874<br /> <strong>Contribution:<\/strong> 4.791<br /> <strong>Count:<\/strong> 878","<strong>2012<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.05<br /> <strong>Axis 2 :<\/strong> -0.109<br /> <strong>Squared cosinus:<\/strong> 0.873<br /> <strong>Contribution:<\/strong> 8.429<br /> <strong>Count:<\/strong> 928","<strong>2013<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.063<br /> <strong>Axis 2 :<\/strong> -0.103<br /> <strong>Squared cosinus:<\/strong> 0.997<br /> <strong>Contribution:<\/strong> 7.395<br /> <strong>Count:<\/strong> 874","<strong>2014<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.142<br /> <strong>Axis 2 :<\/strong> -0.046<br /> <strong>Squared cosinus:<\/strong> 0.942<br /> <strong>Contribution:<\/strong> 4.573<br /> <strong>Count:<\/strong> 929","<strong>2015<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.193<br /> <strong>Axis 2 :<\/strong> 0.048<br /> <strong>Squared cosinus:<\/strong> 0.996<br /> <strong>Contribution:<\/strong> 6.804<br /> <strong>Count:<\/strong> 856","<strong>2016<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.123<br /> <strong>Axis 2 :<\/strong> 0.005<br /> <strong>Squared cosinus:<\/strong> 0.931<br /> <strong>Contribution:<\/strong> 3.25<br /> <strong>Count:<\/strong> 1267","<strong>2017<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.179<br /> <strong>Axis 2 :<\/strong> 0.08<br /> <strong>Squared cosinus:<\/strong> 0.904<br /> <strong>Contribution:<\/strong> 9.275<br /> <strong>Count:<\/strong> 921","<strong>2018<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.245<br /> <strong>Axis 2 :<\/strong> 0.064<br /> <strong>Squared cosinus:<\/strong> 0.963<br /> <strong>Contribution:<\/strong> 11.674<br /> <strong>Count:<\/strong> 896","<strong>2019<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.077<br /> <strong>Axis 2 :<\/strong> 0.119<br /> <strong>Squared cosinus:<\/strong> 0.886<br /> <strong>Contribution:<\/strong> 10.969<br /> <strong>Count:<\/strong> 959","<strong>2020<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.47<br /> <strong>Axis 2 :<\/strong> 0.05<br /> <strong>Squared cosinus:<\/strong> 0.986<br /> <strong>Contribution:<\/strong> 36.533<br /> <strong>Count:<\/strong> 937","<strong>2021<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.038<br /> <strong>Axis 2 :<\/strong> -0.065<br /> <strong>Squared cosinus:<\/strong> 0.548<br /> <strong>Contribution:<\/strong> 3.156<br /> <strong>Count:<\/strong> 945","<strong>2022<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.085<br /> <strong>Axis 2 :<\/strong> -0.013<br /> <strong>Squared cosinus:<\/strong> 0.605<br /> <strong>Contribution:<\/strong> 1.658<br /> <strong>Count:<\/strong> 1233","<strong>2023<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.051<br /> <strong>Axis 2 :<\/strong> -0.008<br /> <strong>Squared cosinus:<\/strong> 0.347<br /> <strong>Contribution:<\/strong> 0.48<br /> <strong>Count:<\/strong> 968"],"tooltip_position_x":"right","tooltip_position_y":"bottom","has_custom_tooltips":true,"click_callback":null,"init_callback":null,"zoom_callback":null,"zoom_on":null,"zoom_on_level":null,"disable_wheel":false,"fixed":true,"legend_width":150,"left_margin":30,"html_id":"scatterD3-YZJUCDLM","xlim":[-0.5580000000000001,0.641],"ylim":[-0.494,0.706],"x_categorical":false,"y_categorical":false,"x_levels":null,"y_levels":null,"menu":true,"lasso":false,"lasso_callback":null,"dom_id_reset_zoom":"scatterD3-reset-zoom","dom_id_svg_export":null,"dom_id_lasso_toggle":null,"transitions":true,"axes_font_size":"100%","legend_font_size":"100%","caption":null,"lines":{"slope":[0,null],"intercept":[0,0],"stroke_dasharray":[5,5]},"hashes":{"x":"b3b897127f9b3ab38c0f062902d6f9c7106de29f52ebd947161461c34c21e085","y":"550ae601647ff485f282abaf787d51315b46fa8d8e3d398d81f451387b5c1f13","lab":"8d4d2bf7f0eb1cb15d1819d6f9829ce5f869b9ee1c66868c9e16ec0ebc38d34c","key_var":"c05a34ecb1d7b86b3c02fbb1b8b59fa3ab5062892f5238119f06241422c9f33e","col_var":"ff8e1d7e74d63d5fa37a5571aeab47117c515cdec3c00f973f059efb400aa4a5","symbol_var":"71557d1c8bac9bbe3cbec8d00bb223a2f372279827064095447e569fbf5a760a","size_var":"8fe8aff63e6c303317b8b4182bf18ecb58da1555ce11371d9f854b281d74b97f","ellipses_data":"28df520b992b4a4bead0a7a527ee2f4fc64fbcc2892ab364f676113761cbeefc","opacity_var":"71557d1c8bac9bbe3cbec8d00bb223a2f372279827064095447e569fbf5a760a","lines":"f84bf8f8ee4b4297d647ec13b5d4362c022c90688f8d9efa8b45e3c4bef3e7fa","labels_positions":"db472a8d1bfeba7ae899342b3bc05fc748ad32b6091bff1656d992bd94e6a53b"}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li><p>The Axis 1 (74% of inertia) is clearly associated to the opposition between favorable opinion (left) and unfavorable opinion (right). The Axis 2 is related to the degree of polarisation that can be higher (top) or lower (down).</p></li>
+<li><p>The most extreme situations are observed in 2002 (very favorable opinion) and 2020 (very unfavorable opinion). They are both related to international events that has dramatically influenced the opinion of UK citizens on the US : sympathy in the case of the folow-up of septembr 11. attacks ; antipathy in the case of Trump présidence and covid crisis. These extreme points are generally not observed during a long period and we observe very strong distance between these years and the one located immediately before and after.</p></li>
+<li><p>Looking at the most important distances between two years, we notice very important jumps in 2002-2003 (begining of the second war in Iraq), 2008-2009 (election of Obama), 2016-2017 (election of Trump) and 2020-2021 (election of Biden).</p></li>
+</ul>
+<p>This results suggest that <strong>it is not obvious to evaluate the opinion of a country about USA if we don’t have several points of observation through time and, ideally, a complete view of the trajectory.</strong></p>
+</section>
+</section>
+<section id="ii.-benchmarking-the-opinions-of-different-countries-about-usa-in-2007" class="level2">
+<h2 class="anchored" data-anchor-id="ii.-benchmarking-the-opinions-of-different-countries-about-usa-in-2007">II. Benchmarking the opinions of different countries about USA in 2007</h2>
+<p>In this second exploration, we select several countries but only one wave of survey. We choose the year 2007 because it is the one for which we have the maximum of countries (47) and also because it is located just before the crise of subprimes that started in july 2007.</p>
+<section id="data-selection-1" class="level3">
+<h3 class="anchored" data-anchor-id="data-selection-1">Data selection</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      sta             wgt              sex             age       
+ CHN    : 3141   Min.   : 0.0100   Female:23028   Min.   :18.00  
+ IND    : 2040   1st Qu.: 0.8655   Male  :21965   1st Qu.:27.00  
+ USA    : 1999   Median : 1.0000                  Median :38.00  
+ PAK    : 1975   Mean   : 1.0003                  Mean   :40.47  
+ UGA    : 1116   3rd Qu.: 1.0033                  3rd Qu.:51.00  
+ NGA    : 1092   Max.   :18.7495                  Max.   :97.00  
+ (Other):33630                                                   
+                   opi       
+ Very favorable      : 6917  
+ Somewhat favorable  :14836  
+ Somewhat unfavorable:11096  
+ Very unfavorable    : 9208  
+ DK                  : 2664  
+ Refused             :  272  
+                             </code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">sta</th>
+<th style="text-align: right;">wgt</th>
+<th style="text-align: left;">sex</th>
+<th style="text-align: right;">age</th>
+<th style="text-align: left;">opi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ARG</td>
+<td style="text-align: right;">0.8136704</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: left;">DK</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ARG</td>
+<td style="text-align: right;">0.8136704</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: left;">Very unfavorable</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ARG</td>
+<td style="text-align: right;">0.8136704</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: left;">DK</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ARG</td>
+<td style="text-align: right;">0.8136704</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: left;">Very unfavorable</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ARG</td>
+<td style="text-align: right;">0.8136704</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: left;">Somewhat unfavorable</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ARG</td>
+<td style="text-align: right;">0.8136704</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: left;">Somewhat favorable</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="opinions-by-country" class="level3">
+<h3 class="anchored" data-anchor-id="opinions-by-country">Opinions by country</h3>
+<p>Keeping all modalities of answer, we can create a weighted table of answers with as many lines as states of survey and as many columns as possibilities of choices.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Opinions by states on USA in 2017(raw count)</caption>
+<colgroup>
+<col style="width: 4%">
+<col style="width: 17%">
+<col style="width: 21%">
+<col style="width: 23%">
+<col style="width: 19%">
+<col style="width: 4%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">sta</th>
+<th style="text-align: right;">Very favorable</th>
+<th style="text-align: right;">Somewhat favorable</th>
+<th style="text-align: right;">Somewhat unfavorable</th>
+<th style="text-align: right;">Very unfavorable</th>
+<th style="text-align: right;">DK</th>
+<th style="text-align: right;">Refused</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ARG</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">248</td>
+<td style="text-align: right;">332</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BGD</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">359</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">258</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BGR</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">186</td>
+<td style="text-align: right;">122</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BOL</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">280</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BRA</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">396</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CAN</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">426</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CHL</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">327</td>
+<td style="text-align: right;">196</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHN</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">1012</td>
+<td style="text-align: right;">1477</td>
+<td style="text-align: right;">318</td>
+<td style="text-align: right;">244</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CIV</td>
+<td style="text-align: right;">363</td>
+<td style="text-align: right;">265</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CZE</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">358</td>
+<td style="text-align: right;">357</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DEU</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">281</td>
+<td style="text-align: right;">466</td>
+<td style="text-align: right;">195</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EGY</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">319</td>
+<td style="text-align: right;">457</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ESP</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">159</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">142</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ETH</td>
+<td style="text-align: right;">293</td>
+<td style="text-align: right;">252</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FRA</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">345</td>
+<td style="text-align: right;">446</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GBR</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">410</td>
+<td style="text-align: right;">288</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GHA</td>
+<td style="text-align: right;">318</td>
+<td style="text-align: right;">244</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IDN</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">251</td>
+<td style="text-align: right;">415</td>
+<td style="text-align: right;">245</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IND</td>
+<td style="text-align: right;">407</td>
+<td style="text-align: right;">804</td>
+<td style="text-align: right;">373</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">209</td>
+<td style="text-align: right;">37</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ISR</td>
+<td style="text-align: right;">263</td>
+<td style="text-align: right;">437</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ITA</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">138</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">JOR</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">122</td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">521</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">JPN</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">404</td>
+<td style="text-align: right;">254</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KEN</td>
+<td style="text-align: right;">429</td>
+<td style="text-align: right;">434</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KOR</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">397</td>
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KWT</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LBN</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">313</td>
+<td style="text-align: right;">239</td>
+<td style="text-align: right;">278</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MAR</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">163</td>
+<td style="text-align: right;">396</td>
+<td style="text-align: right;">266</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MEX</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">381</td>
+<td style="text-align: right;">217</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MLI</td>
+<td style="text-align: right;">311</td>
+<td style="text-align: right;">248</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MYS</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">272</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NGA</td>
+<td style="text-align: right;">486</td>
+<td style="text-align: right;">272</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">194</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PAK</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">223</td>
+<td style="text-align: right;">282</td>
+<td style="text-align: right;">1076</td>
+<td style="text-align: right;">313</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PER</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">390</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">POL</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">248</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSE</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">121</td>
+<td style="text-align: right;">551</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RUS</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">326</td>
+<td style="text-align: right;">314</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SEN</td>
+<td style="text-align: right;">181</td>
+<td style="text-align: right;">299</td>
+<td style="text-align: right;">131</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SVK</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">339</td>
+<td style="text-align: right;">330</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SWE</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">367</td>
+<td style="text-align: right;">368</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TUR</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">729</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TZA</td>
+<td style="text-align: right;">143</td>
+<td style="text-align: right;">186</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">172</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">UGA</td>
+<td style="text-align: right;">326</td>
+<td style="text-align: right;">390</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">121</td>
+<td style="text-align: right;">183</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UKR</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">222</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">USA</td>
+<td style="text-align: right;">941</td>
+<td style="text-align: right;">662</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VEN</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">356</td>
+<td style="text-align: right;">147</td>
+<td style="text-align: right;">178</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ZAF</td>
+<td style="text-align: right;">215</td>
+<td style="text-align: right;">404</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can easily transform the table in percentage for a better visualisation of the probability of opinion of each type :</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Opinions by states on USA in 2007 (%)</caption>
+<colgroup>
+<col style="width: 4%">
+<col style="width: 16%">
+<col style="width: 21%">
+<col style="width: 23%">
+<col style="width: 19%">
+<col style="width: 5%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Very favorable</th>
+<th style="text-align: right;">Somewhat favorable</th>
+<th style="text-align: right;">Somewhat unfavorable</th>
+<th style="text-align: right;">Very unfavorable</th>
+<th style="text-align: right;">DK</th>
+<th style="text-align: right;">Refused</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ARG</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">13.3</td>
+<td style="text-align: right;">31.0</td>
+<td style="text-align: right;">41.5</td>
+<td style="text-align: right;">9.5</td>
+<td style="text-align: right;">1.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BGD</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">36.4</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">26.1</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BGR</td>
+<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">37.9</td>
+<td style="text-align: right;">24.9</td>
+<td style="text-align: right;">16.2</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BOL</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">33.6</td>
+<td style="text-align: right;">32.7</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">1.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BRA</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">39.6</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">12.8</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CAN</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">43.4</td>
+<td style="text-align: right;">27.9</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CHL</td>
+<td style="text-align: right;">13.7</td>
+<td style="text-align: right;">40.9</td>
+<td style="text-align: right;">24.5</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">8.2</td>
+<td style="text-align: right;">1.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHN</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">32.2</td>
+<td style="text-align: right;">47.0</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CIV</td>
+<td style="text-align: right;">51.3</td>
+<td style="text-align: right;">37.5</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CZE</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">40.0</td>
+<td style="text-align: right;">39.8</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">1.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DEU</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">28.1</td>
+<td style="text-align: right;">46.6</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EGY</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">14.1</td>
+<td style="text-align: right;">31.9</td>
+<td style="text-align: right;">45.7</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ESP</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">31.8</td>
+<td style="text-align: right;">31.6</td>
+<td style="text-align: right;">28.4</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ETH</td>
+<td style="text-align: right;">41.3</td>
+<td style="text-align: right;">35.5</td>
+<td style="text-align: right;">14.2</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FRA</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">34.4</td>
+<td style="text-align: right;">44.4</td>
+<td style="text-align: right;">16.3</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GBR</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">41.8</td>
+<td style="text-align: right;">29.4</td>
+<td style="text-align: right;">12.7</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GHA</td>
+<td style="text-align: right;">45.0</td>
+<td style="text-align: right;">34.5</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IDN</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">25.3</td>
+<td style="text-align: right;">41.8</td>
+<td style="text-align: right;">24.6</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IND</td>
+<td style="text-align: right;">20.0</td>
+<td style="text-align: right;">39.4</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">1.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ISR</td>
+<td style="text-align: right;">29.7</td>
+<td style="text-align: right;">49.3</td>
+<td style="text-align: right;">14.9</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ITA</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">46.6</td>
+<td style="text-align: right;">27.5</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">1.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">JOR</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: right;">25.5</td>
+<td style="text-align: right;">52.1</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">JPN</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">53.0</td>
+<td style="text-align: right;">33.3</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KEN</td>
+<td style="text-align: right;">43.0</td>
+<td style="text-align: right;">43.5</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KOR</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">55.3</td>
+<td style="text-align: right;">32.6</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KWT</td>
+<td style="text-align: right;">13.6</td>
+<td style="text-align: right;">31.6</td>
+<td style="text-align: right;">19.4</td>
+<td style="text-align: right;">26.6</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">1.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LBN</td>
+<td style="text-align: right;">16.2</td>
+<td style="text-align: right;">31.3</td>
+<td style="text-align: right;">23.9</td>
+<td style="text-align: right;">27.8</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MAR</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">16.3</td>
+<td style="text-align: right;">39.6</td>
+<td style="text-align: right;">26.6</td>
+<td style="text-align: right;">2.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MEX</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">46.0</td>
+<td style="text-align: right;">26.2</td>
+<td style="text-align: right;">15.1</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MLI</td>
+<td style="text-align: right;">44.4</td>
+<td style="text-align: right;">35.4</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MYS</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">23.1</td>
+<td style="text-align: right;">30.1</td>
+<td style="text-align: right;">39.1</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NGA</td>
+<td style="text-align: right;">44.5</td>
+<td style="text-align: right;">24.9</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">0.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PAK</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">11.3</td>
+<td style="text-align: right;">14.2</td>
+<td style="text-align: right;">54.3</td>
+<td style="text-align: right;">15.8</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PER</td>
+<td style="text-align: right;">12.4</td>
+<td style="text-align: right;">48.8</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">11.5</td>
+<td style="text-align: right;">6.9</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">POL</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">49.2</td>
+<td style="text-align: right;">24.6</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSE</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">15.6</td>
+<td style="text-align: right;">70.9</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RUS</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">32.9</td>
+<td style="text-align: right;">31.7</td>
+<td style="text-align: right;">16.1</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SEN</td>
+<td style="text-align: right;">25.9</td>
+<td style="text-align: right;">42.7</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SVK</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">37.7</td>
+<td style="text-align: right;">36.7</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">0.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SWE</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">36.9</td>
+<td style="text-align: right;">37.0</td>
+<td style="text-align: right;">11.7</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TUR</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">75.1</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TZA</td>
+<td style="text-align: right;">20.4</td>
+<td style="text-align: right;">26.5</td>
+<td style="text-align: right;">15.2</td>
+<td style="text-align: right;">24.5</td>
+<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">1.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">UGA</td>
+<td style="text-align: right;">29.3</td>
+<td style="text-align: right;">35.0</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">10.9</td>
+<td style="text-align: right;">16.4</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UKR</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">44.3</td>
+<td style="text-align: right;">19.4</td>
+<td style="text-align: right;">19.6</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">USA</td>
+<td style="text-align: right;">47.0</td>
+<td style="text-align: right;">33.0</td>
+<td style="text-align: right;">11.8</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VEN</td>
+<td style="text-align: right;">12.1</td>
+<td style="text-align: right;">44.3</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">22.2</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ZAF</td>
+<td style="text-align: right;">21.5</td>
+<td style="text-align: right;">40.4</td>
+<td style="text-align: right;">14.8</td>
+<td style="text-align: right;">15.2</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="who-has-an-opinion-1" class="level3">
+<h3 class="anchored" data-anchor-id="who-has-an-opinion-1">Who has an opinion ?</h3>
+<p>We can firstly investigate the % of people that refused to answer or did not made a choice.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explo_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As we can see on the figure, there is a great variability in the proportion of people that has formulated an opinion in the different countries where the survey has been realized. The countries where the maximum of people has refused to answer are Morocco (29%), Uganda (17%), Pakistan (16%) and Tanzania (13%). The reverse situation is observed in Côte d’Ivoire, France, and Lebanon where less than 1% of people did not formulated an opinion on USA.</p>
+</section>
+<section id="polarisation" class="level3">
+<h3 class="anchored" data-anchor-id="polarisation">Polarisation</h3>
+<p>We can then investigate the degree of polarisation, defined as the proportion of people that used the extreme values of the likert scale.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explo_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The most important levels of polarisation are observed in countries from Middle East characterized by very negative opinion of USA (Turkey, Palestiniant territories, Jordan, Pakistan, …) but also in countries from subsaharan Africa characterised by very positive opinion of USA (Nigeria, Côte d’ivoire, Mali, …). The countries with low level of polarisation are rather located in Asia (Korea, China, Japan, …), Europe (Czech republic, Italia, Poland, …) and Latin America (Brazil, Peru,…).</p>
+</section>
+<section id="balance-of-favorable-and-unfavorable-opinions" class="level3">
+<h3 class="anchored" data-anchor-id="balance-of-favorable-and-unfavorable-opinions">Balance of favorable and unfavorable opinions</h3>
+<p>We use here the classical index of attraction-repulsion <span class="math inline">\(I\)</span> to evaluate the balance of positive and negative opinion.</p>
+<p><span class="math inline">\(I = \frac{Favorable-Unfavorable}{Favorable+Unfavorable}\)</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="explo_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The index of attraction-repulsion is theoretically bounded between -1 (all opinions are unfavorable) and + 1 (all opinions are favorable) with an equilibrium around 0 (equal number of favorable and unfavorable opinions). In present case, we observe a very strong diversity of positions from -0.81 in Turkey to +0.77 in Ivory Coast. The countries are to some extent clustered in regions with very negative opinions in Middle east and very positive in subsaharan Africa. But they are exceptions and we should not conclude too quickly because it is possible that people has systematically provide positive or negative answers to foreign countries proposed to their evaluation. As we will see later, the absolute opinion on USA is less interesting than the comparison between USA and other countries of reference like Chinaor Russia.</p>
+</section>
+<section id="mapping-with-ca" class="level3">
+<h3 class="anchored" data-anchor-id="mapping-with-ca">Mapping with CA</h3>
+<p>We can use a <strong>correspondance analysis</strong> in order to visualize the positions of countries about USA. We will obtain by this method a <em>map</em> of the world opinion where distance between positions reveals differences in opinions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="scatterD3 html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-fef0905d43c7b09b6384" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-fef0905d43c7b09b6384">{"x":{"data":{"x":[0.765,0.242,-0.175,-0.747,-0.6929999999999999,-0.003,0.048,-0.12,-0.08,0.08,0.177,-0.133,0.897,-0.027,-0.295,-0.635,-0.375,0.645,-0.162,0.051,0.782,-0.355,0.318,0.579,0.08400000000000001,-0.699,0.226,0.8169999999999999,0.137,-0.115,-0.101,-0.755,0.059,0.696,-0.544,0.524,-0.889,0.198,0.28,-1.037,-0.082,0.398,-0.159,0.011,-1.189,0.024,0.513,0.001,0.772,0.005,0.269],"y":[0.528,-0.189,-0.427,0.423,0.103,0.19,-0.124,-0.236,-0.456,-0.215,-0.182,-0.587,0.464,-0.481,-0.428,0.176,-0.18,0.33,-0.422,-0.294,0.474,-0.283,-0.011,0.054,-0.372,0.353,-0.514,0.338,-0.573,0.12,0.111,0.372,-0.223,0.453,0.034,0.604,0.53,-0.182,-0.317,0.635,-0.259,0.051,-0.377,-0.366,0.788,0.29,0.31,-0.093,0.429,-0.012,0.109],"lab":["Very favorable","Somewhat favorable","Somewhat unfavorable","Very unfavorable","ARG","BGD","BGR","BOL","BRA","CAN","CHL","CHN","CIV","CZE","DEU","EGY","ESP","ETH","FRA","GBR","GHA","IDN","IND","ISR","ITA","JOR","JPN","KEN","KOR","KWT","LBN","MAR","MEX","MLI","MYS","NGA","PAK","PER","POL","PSE","RUS","SEN","SVK","SWE","TUR","TZA","UGA","UKR","USA","VEN","ZAF"],"col_var":["Column","Column","Column","Column","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row","Row"],"size_var":[69.92700000000001,17.002,36.352,76.71899999999999,3.417,0.553,0.122,0.8109999999999999,3.278,0.7769999999999999,0.61,16.77,7.978,3.233,3.698,4.326000000000001,0.884,4.064,3.18,1.311,6.338,2.387,1.756,2.866,1.064,6.611000000000001,3.553,8.073,3.808,0.165,0.296,5.49,0.681,5.513999999999999,1.921,9.085000000000001,20.307,0.6850000000000001,1.106,12.971,1.023,1.069,2.199,2.055,21.294,0.842,3.816,0.066,17.126,0.002,0.819],"type_var":["point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point","point"],"key_var":["Column-Very favorable","Column-Somewhat favorable","Column-Somewhat unfavorable","Column-Very unfavorable","Row-ARG","Row-BGD","Row-BGR","Row-BOL","Row-BRA","Row-CAN","Row-CHL","Row-CHN","Row-CIV","Row-CZE","Row-DEU","Row-EGY","Row-ESP","Row-ETH","Row-FRA","Row-GBR","Row-GHA","Row-IDN","Row-IND","Row-ISR","Row-ITA","Row-JOR","Row-JPN","Row-KEN","Row-KOR","Row-KWT","Row-LBN","Row-MAR","Row-MEX","Row-MLI","Row-MYS","Row-NGA","Row-PAK","Row-PER","Row-POL","Row-PSE","Row-RUS","Row-SEN","Row-SVK","Row-SWE","Row-TUR","Row-TZA","Row-UGA","Row-UKR","Row-USA","Row-VEN","Row-ZAF"],"tooltip_text":["<strong>Very favorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> 0.765<br /> <strong>Axis 2 :<\/strong> 0.528<br /> <strong>Squared cosinus:<\/strong> 0.981<br /> <strong>Contribution:<\/strong> 69.927<br /> <strong>Count:<\/strong> 6862","<strong>Somewhat favorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> 0.242<br /> <strong>Axis 2 :<\/strong> -0.189<br /> <strong>Squared cosinus:<\/strong> 0.785<br /> <strong>Contribution:<\/strong> 17.002<br /> <strong>Count:<\/strong> 14813","<strong>Somewhat unfavorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> -0.175<br /> <strong>Axis 2 :<\/strong> -0.427<br /> <strong>Squared cosinus:<\/strong> 0.887<br /> <strong>Contribution:<\/strong> 36.352<br /> <strong>Count:<\/strong> 11078","<strong>Very unfavorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> -0.747<br /> <strong>Axis 2 :<\/strong> 0.423<br /> <strong>Squared cosinus:<\/strong> 0.998<br /> <strong>Contribution:<\/strong> 76.719<br /> <strong>Count:<\/strong> 9239","<strong>ARG<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.693<br /> <strong>Axis 2 :<\/strong> 0.103<br /> <strong>Squared cosinus:<\/strong> 0.95<br /> <strong>Contribution:<\/strong> 3.417<br /> <strong>Count:<\/strong> 713","<strong>BGD<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.003<br /> <strong>Axis 2 :<\/strong> 0.19<br /> <strong>Squared cosinus:<\/strong> 0.591<br /> <strong>Contribution:<\/strong> 0.553<br /> <strong>Count:<\/strong> 935","<strong>BGR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.048<br /> <strong>Axis 2 :<\/strong> -0.124<br /> <strong>Squared cosinus:<\/strong> 0.747<br /> <strong>Contribution:<\/strong> 0.122<br /> <strong>Count:<\/strong> 449","<strong>BOL<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.12<br /> <strong>Axis 2 :<\/strong> -0.236<br /> <strong>Squared cosinus:<\/strong> 0.99<br /> <strong>Contribution:<\/strong> 0.811<br /> <strong>Count:<\/strong> 773","<strong>BRA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.08<br /> <strong>Axis 2 :<\/strong> -0.456<br /> <strong>Squared cosinus:<\/strong> 1<br /> <strong>Contribution:<\/strong> 3.278<br /> <strong>Count:<\/strong> 946","<strong>CAN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.08<br /> <strong>Axis 2 :<\/strong> -0.215<br /> <strong>Squared cosinus:<\/strong> 0.829<br /> <strong>Contribution:<\/strong> 0.777<br /> <strong>Count:<\/strong> 954","<strong>CHL<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.177<br /> <strong>Axis 2 :<\/strong> -0.182<br /> <strong>Squared cosinus:<\/strong> 0.879<br /> <strong>Contribution:<\/strong> 0.61<br /> <strong>Count:<\/strong> 721","<strong>CHN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.133<br /> <strong>Axis 2 :<\/strong> -0.587<br /> <strong>Squared cosinus:<\/strong> 0.902<br /> <strong>Contribution:<\/strong> 16.77<br /> <strong>Count:<\/strong> 2885","<strong>CIV<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.897<br /> <strong>Axis 2 :<\/strong> 0.464<br /> <strong>Squared cosinus:<\/strong> 0.984<br /> <strong>Contribution:<\/strong> 7.978<br /> <strong>Count:<\/strong> 708","<strong>CZE<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.027<br /> <strong>Axis 2 :<\/strong> -0.481<br /> <strong>Squared cosinus:<\/strong> 0.996<br /> <strong>Contribution:<\/strong> 3.233<br /> <strong>Count:<\/strong> 854","<strong>DEU<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.295<br /> <strong>Axis 2 :<\/strong> -0.428<br /> <strong>Squared cosinus:<\/strong> 0.861<br /> <strong>Contribution:<\/strong> 3.698<br /> <strong>Count:<\/strong> 965","<strong>EGY<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.635<br /> <strong>Axis 2 :<\/strong> 0.176<br /> <strong>Squared cosinus:<\/strong> 0.938<br /> <strong>Contribution:<\/strong> 4.326<br /> <strong>Count:<\/strong> 985","<strong>ESP<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.375<br /> <strong>Axis 2 :<\/strong> -0.18<br /> <strong>Squared cosinus:<\/strong> 0.987<br /> <strong>Contribution:<\/strong> 0.884<br /> <strong>Count:<\/strong> 469","<strong>ETH<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.645<br /> <strong>Axis 2 :<\/strong> 0.33<br /> <strong>Squared cosinus:<\/strong> 0.976<br /> <strong>Contribution:<\/strong> 4.064<br /> <strong>Count:<\/strong> 702","<strong>FRA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.162<br /> <strong>Axis 2 :<\/strong> -0.422<br /> <strong>Squared cosinus:<\/strong> 0.922<br /> <strong>Contribution:<\/strong> 3.18<br /> <strong>Count:<\/strong> 1002","<strong>GBR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.051<br /> <strong>Axis 2 :<\/strong> -0.294<br /> <strong>Squared cosinus:<\/strong> 0.911<br /> <strong>Contribution:<\/strong> 1.311<br /> <strong>Count:<\/strong> 909","<strong>GHA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.782<br /> <strong>Axis 2 :<\/strong> 0.474<br /> <strong>Squared cosinus:<\/strong> 0.991<br /> <strong>Contribution:<\/strong> 6.338<br /> <strong>Count:<\/strong> 662","<strong>IDN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.355<br /> <strong>Axis 2 :<\/strong> -0.283<br /> <strong>Squared cosinus:<\/strong> 0.857<br /> <strong>Contribution:<\/strong> 2.387<br /> <strong>Count:<\/strong> 947","<strong>IND<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.318<br /> <strong>Axis 2 :<\/strong> -0.011<br /> <strong>Squared cosinus:<\/strong> 0.919<br /> <strong>Contribution:<\/strong> 1.756<br /> <strong>Count:<\/strong> 1794","<strong>ISR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.579<br /> <strong>Axis 2 :<\/strong> 0.054<br /> <strong>Squared cosinus:<\/strong> 0.947<br /> <strong>Contribution:<\/strong> 2.866<br /> <strong>Count:<\/strong> 875","<strong>ITA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.084<br /> <strong>Axis 2 :<\/strong> -0.372<br /> <strong>Squared cosinus:<\/strong> 0.784<br /> <strong>Contribution:<\/strong> 1.064<br /> <strong>Count:<\/strong> 455","<strong>JOR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.699<br /> <strong>Axis 2 :<\/strong> 0.353<br /> <strong>Squared cosinus:<\/strong> 0.979<br /> <strong>Contribution:<\/strong> 6.611<br /> <strong>Count:<\/strong> 981","<strong>JPN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.226<br /> <strong>Axis 2 :<\/strong> -0.514<br /> <strong>Squared cosinus:<\/strong> 0.924<br /> <strong>Contribution:<\/strong> 3.553<br /> <strong>Count:<\/strong> 738","<strong>KEN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.817<br /> <strong>Axis 2 :<\/strong> 0.338<br /> <strong>Squared cosinus:<\/strong> 0.999<br /> <strong>Contribution:<\/strong> 8.073<br /> <strong>Count:<\/strong> 973","<strong>KOR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.137<br /> <strong>Axis 2 :<\/strong> -0.573<br /> <strong>Squared cosinus:<\/strong> 0.846<br /> <strong>Contribution:<\/strong> 3.808<br /> <strong>Count:<\/strong> 685","<strong>KWT<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.115<br /> <strong>Axis 2 :<\/strong> 0.12<br /> <strong>Squared cosinus:<\/strong> 0.797<br /> <strong>Contribution:<\/strong> 0.165<br /> <strong>Count:<\/strong> 456","<strong>LBN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.101<br /> <strong>Axis 2 :<\/strong> 0.111<br /> <strong>Squared cosinus:<\/strong> 1<br /> <strong>Contribution:<\/strong> 0.296<br /> <strong>Count:<\/strong> 992","<strong>MAR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.755<br /> <strong>Axis 2 :<\/strong> 0.372<br /> <strong>Squared cosinus:<\/strong> 0.999<br /> <strong>Contribution:<\/strong> 5.49<br /> <strong>Count:<\/strong> 708","<strong>MEX<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.059<br /> <strong>Axis 2 :<\/strong> -0.223<br /> <strong>Squared cosinus:<\/strong> 0.637<br /> <strong>Contribution:<\/strong> 0.681<br /> <strong>Count:<\/strong> 805","<strong>MLI<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.696<br /> <strong>Axis 2 :<\/strong> 0.453<br /> <strong>Squared cosinus:<\/strong> 0.991<br /> <strong>Contribution:<\/strong> 5.514<br /> <strong>Count:<\/strong> 687","<strong>MYS<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.544<br /> <strong>Axis 2 :<\/strong> 0.034<br /> <strong>Squared cosinus:<\/strong> 0.997<br /> <strong>Contribution:<\/strong> 1.921<br /> <strong>Count:<\/strong> 669","<strong>NGA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.524<br /> <strong>Axis 2 :<\/strong> 0.604<br /> <strong>Squared cosinus:<\/strong> 0.944<br /> <strong>Contribution:<\/strong> 9.085<br /> <strong>Count:<\/strong> 1055","<strong>PAK<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.889<br /> <strong>Axis 2 :<\/strong> 0.53<br /> <strong>Squared cosinus:<\/strong> 0.996<br /> <strong>Contribution:<\/strong> 20.307<br /> <strong>Count:<\/strong> 1664","<strong>PER<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.198<br /> <strong>Axis 2 :<\/strong> -0.182<br /> <strong>Squared cosinus:<\/strong> 0.519<br /> <strong>Contribution:<\/strong> 0.685<br /> <strong>Count:<\/strong> 743","<strong>POL<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.28<br /> <strong>Axis 2 :<\/strong> -0.317<br /> <strong>Squared cosinus:<\/strong> 0.818<br /> <strong>Contribution:<\/strong> 1.106<br /> <strong>Count:<\/strong> 461","<strong>PSE<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -1.037<br /> <strong>Axis 2 :<\/strong> 0.635<br /> <strong>Squared cosinus:<\/strong> 0.999<br /> <strong>Contribution:<\/strong> 12.971<br /> <strong>Count:<\/strong> 765","<strong>RUS<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.082<br /> <strong>Axis 2 :<\/strong> -0.259<br /> <strong>Squared cosinus:<\/strong> 0.988<br /> <strong>Contribution:<\/strong> 1.023<br /> <strong>Count:<\/strong> 878","<strong>SEN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.398<br /> <strong>Axis 2 :<\/strong> 0.051<br /> <strong>Squared cosinus:<\/strong> 0.975<br /> <strong>Contribution:<\/strong> 1.069<br /> <strong>Count:<\/strong> 682","<strong>SVK<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.159<br /> <strong>Axis 2 :<\/strong> -0.377<br /> <strong>Squared cosinus:<\/strong> 0.999<br /> <strong>Contribution:<\/strong> 2.199<br /> <strong>Count:<\/strong> 855","<strong>SWE<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.011<br /> <strong>Axis 2 :<\/strong> -0.366<br /> <strong>Squared cosinus:<\/strong> 0.967<br /> <strong>Contribution:<\/strong> 2.055<br /> <strong>Count:<\/strong> 939","<strong>TUR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -1.189<br /> <strong>Axis 2 :<\/strong> 0.788<br /> <strong>Squared cosinus:<\/strong> 0.988<br /> <strong>Contribution:<\/strong> 21.294<br /> <strong>Count:<\/strong> 896","<strong>TZA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.024<br /> <strong>Axis 2 :<\/strong> 0.29<br /> <strong>Squared cosinus:<\/strong> 1<br /> <strong>Contribution:<\/strong> 0.842<br /> <strong>Count:<\/strong> 608","<strong>UGA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.513<br /> <strong>Axis 2 :<\/strong> 0.31<br /> <strong>Squared cosinus:<\/strong> 0.982<br /> <strong>Contribution:<\/strong> 3.816<br /> <strong>Count:<\/strong> 930","<strong>UKR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.001<br /> <strong>Axis 2 :<\/strong> -0.093<br /> <strong>Squared cosinus:<\/strong> 0.111<br /> <strong>Contribution:<\/strong> 0.066<br /> <strong>Count:<\/strong> 465","<strong>USA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.772<br /> <strong>Axis 2 :<\/strong> 0.429<br /> <strong>Squared cosinus:<\/strong> 0.961<br /> <strong>Contribution:<\/strong> 17.126<br /> <strong>Count:<\/strong> 1957","<strong>VEN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.005<br /> <strong>Axis 2 :<\/strong> -0.012<br /> <strong>Squared cosinus:<\/strong> 0.002<br /> <strong>Contribution:<\/strong> 0.002<br /> <strong>Count:<\/strong> 778","<strong>ZAF<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.269<br /> <strong>Axis 2 :<\/strong> 0.109<br /> <strong>Squared cosinus:<\/strong> 0.8<br /> <strong>Contribution:<\/strong> 0.819<br /> <strong>Count:<\/strong> 919"]},"settings":{"x_log":false,"y_log":false,"labels_size":10,"labels_positions":"auto","point_size":56,"point_opacity":1,"opacities":null,"hover_size":1,"hover_opacity":null,"xlab":"Axis 1 (60.03%)","ylab":"Axis 2 (35.32%)","has_labels":true,"col_lab":"Position","col_continuous":false,"col_levels":null,"colors":null,"ellipses":false,"ellipses_data":[],"symbol_lab":"if (is.null(symbol_var)) NULL else var_data[, symbol_var]","symbol_levels":null,"symbols":null,"size_range":[52.5,700],"size_lab":"Contrib","sizes":null,"opacity_lab":"NULL","opacities.1":null,"unit_circle":false,"has_color_var":true,"has_symbol_var":false,"has_size_var":true,"has_opacity_var":false,"has_url_var":false,"has_legend":true,"has_tooltips":true,"tooltip_text":["<strong>Very favorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> 0.765<br /> <strong>Axis 2 :<\/strong> 0.528<br /> <strong>Squared cosinus:<\/strong> 0.981<br /> <strong>Contribution:<\/strong> 69.927<br /> <strong>Count:<\/strong> 6862","<strong>Somewhat favorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> 0.242<br /> <strong>Axis 2 :<\/strong> -0.189<br /> <strong>Squared cosinus:<\/strong> 0.785<br /> <strong>Contribution:<\/strong> 17.002<br /> <strong>Count:<\/strong> 14813","<strong>Somewhat unfavorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> -0.175<br /> <strong>Axis 2 :<\/strong> -0.427<br /> <strong>Squared cosinus:<\/strong> 0.887<br /> <strong>Contribution:<\/strong> 36.352<br /> <strong>Count:<\/strong> 11078","<strong>Very unfavorable<\/strong><br /> <strong>Position:<\/strong> Column<br /> <strong>Axis 1 :<\/strong> -0.747<br /> <strong>Axis 2 :<\/strong> 0.423<br /> <strong>Squared cosinus:<\/strong> 0.998<br /> <strong>Contribution:<\/strong> 76.719<br /> <strong>Count:<\/strong> 9239","<strong>ARG<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.693<br /> <strong>Axis 2 :<\/strong> 0.103<br /> <strong>Squared cosinus:<\/strong> 0.95<br /> <strong>Contribution:<\/strong> 3.417<br /> <strong>Count:<\/strong> 713","<strong>BGD<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.003<br /> <strong>Axis 2 :<\/strong> 0.19<br /> <strong>Squared cosinus:<\/strong> 0.591<br /> <strong>Contribution:<\/strong> 0.553<br /> <strong>Count:<\/strong> 935","<strong>BGR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.048<br /> <strong>Axis 2 :<\/strong> -0.124<br /> <strong>Squared cosinus:<\/strong> 0.747<br /> <strong>Contribution:<\/strong> 0.122<br /> <strong>Count:<\/strong> 449","<strong>BOL<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.12<br /> <strong>Axis 2 :<\/strong> -0.236<br /> <strong>Squared cosinus:<\/strong> 0.99<br /> <strong>Contribution:<\/strong> 0.811<br /> <strong>Count:<\/strong> 773","<strong>BRA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.08<br /> <strong>Axis 2 :<\/strong> -0.456<br /> <strong>Squared cosinus:<\/strong> 1<br /> <strong>Contribution:<\/strong> 3.278<br /> <strong>Count:<\/strong> 946","<strong>CAN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.08<br /> <strong>Axis 2 :<\/strong> -0.215<br /> <strong>Squared cosinus:<\/strong> 0.829<br /> <strong>Contribution:<\/strong> 0.777<br /> <strong>Count:<\/strong> 954","<strong>CHL<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.177<br /> <strong>Axis 2 :<\/strong> -0.182<br /> <strong>Squared cosinus:<\/strong> 0.879<br /> <strong>Contribution:<\/strong> 0.61<br /> <strong>Count:<\/strong> 721","<strong>CHN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.133<br /> <strong>Axis 2 :<\/strong> -0.587<br /> <strong>Squared cosinus:<\/strong> 0.902<br /> <strong>Contribution:<\/strong> 16.77<br /> <strong>Count:<\/strong> 2885","<strong>CIV<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.897<br /> <strong>Axis 2 :<\/strong> 0.464<br /> <strong>Squared cosinus:<\/strong> 0.984<br /> <strong>Contribution:<\/strong> 7.978<br /> <strong>Count:<\/strong> 708","<strong>CZE<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.027<br /> <strong>Axis 2 :<\/strong> -0.481<br /> <strong>Squared cosinus:<\/strong> 0.996<br /> <strong>Contribution:<\/strong> 3.233<br /> <strong>Count:<\/strong> 854","<strong>DEU<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.295<br /> <strong>Axis 2 :<\/strong> -0.428<br /> <strong>Squared cosinus:<\/strong> 0.861<br /> <strong>Contribution:<\/strong> 3.698<br /> <strong>Count:<\/strong> 965","<strong>EGY<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.635<br /> <strong>Axis 2 :<\/strong> 0.176<br /> <strong>Squared cosinus:<\/strong> 0.938<br /> <strong>Contribution:<\/strong> 4.326<br /> <strong>Count:<\/strong> 985","<strong>ESP<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.375<br /> <strong>Axis 2 :<\/strong> -0.18<br /> <strong>Squared cosinus:<\/strong> 0.987<br /> <strong>Contribution:<\/strong> 0.884<br /> <strong>Count:<\/strong> 469","<strong>ETH<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.645<br /> <strong>Axis 2 :<\/strong> 0.33<br /> <strong>Squared cosinus:<\/strong> 0.976<br /> <strong>Contribution:<\/strong> 4.064<br /> <strong>Count:<\/strong> 702","<strong>FRA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.162<br /> <strong>Axis 2 :<\/strong> -0.422<br /> <strong>Squared cosinus:<\/strong> 0.922<br /> <strong>Contribution:<\/strong> 3.18<br /> <strong>Count:<\/strong> 1002","<strong>GBR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.051<br /> <strong>Axis 2 :<\/strong> -0.294<br /> <strong>Squared cosinus:<\/strong> 0.911<br /> <strong>Contribution:<\/strong> 1.311<br /> <strong>Count:<\/strong> 909","<strong>GHA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.782<br /> <strong>Axis 2 :<\/strong> 0.474<br /> <strong>Squared cosinus:<\/strong> 0.991<br /> <strong>Contribution:<\/strong> 6.338<br /> <strong>Count:<\/strong> 662","<strong>IDN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.355<br /> <strong>Axis 2 :<\/strong> -0.283<br /> <strong>Squared cosinus:<\/strong> 0.857<br /> <strong>Contribution:<\/strong> 2.387<br /> <strong>Count:<\/strong> 947","<strong>IND<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.318<br /> <strong>Axis 2 :<\/strong> -0.011<br /> <strong>Squared cosinus:<\/strong> 0.919<br /> <strong>Contribution:<\/strong> 1.756<br /> <strong>Count:<\/strong> 1794","<strong>ISR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.579<br /> <strong>Axis 2 :<\/strong> 0.054<br /> <strong>Squared cosinus:<\/strong> 0.947<br /> <strong>Contribution:<\/strong> 2.866<br /> <strong>Count:<\/strong> 875","<strong>ITA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.084<br /> <strong>Axis 2 :<\/strong> -0.372<br /> <strong>Squared cosinus:<\/strong> 0.784<br /> <strong>Contribution:<\/strong> 1.064<br /> <strong>Count:<\/strong> 455","<strong>JOR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.699<br /> <strong>Axis 2 :<\/strong> 0.353<br /> <strong>Squared cosinus:<\/strong> 0.979<br /> <strong>Contribution:<\/strong> 6.611<br /> <strong>Count:<\/strong> 981","<strong>JPN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.226<br /> <strong>Axis 2 :<\/strong> -0.514<br /> <strong>Squared cosinus:<\/strong> 0.924<br /> <strong>Contribution:<\/strong> 3.553<br /> <strong>Count:<\/strong> 738","<strong>KEN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.817<br /> <strong>Axis 2 :<\/strong> 0.338<br /> <strong>Squared cosinus:<\/strong> 0.999<br /> <strong>Contribution:<\/strong> 8.073<br /> <strong>Count:<\/strong> 973","<strong>KOR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.137<br /> <strong>Axis 2 :<\/strong> -0.573<br /> <strong>Squared cosinus:<\/strong> 0.846<br /> <strong>Contribution:<\/strong> 3.808<br /> <strong>Count:<\/strong> 685","<strong>KWT<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.115<br /> <strong>Axis 2 :<\/strong> 0.12<br /> <strong>Squared cosinus:<\/strong> 0.797<br /> <strong>Contribution:<\/strong> 0.165<br /> <strong>Count:<\/strong> 456","<strong>LBN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.101<br /> <strong>Axis 2 :<\/strong> 0.111<br /> <strong>Squared cosinus:<\/strong> 1<br /> <strong>Contribution:<\/strong> 0.296<br /> <strong>Count:<\/strong> 992","<strong>MAR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.755<br /> <strong>Axis 2 :<\/strong> 0.372<br /> <strong>Squared cosinus:<\/strong> 0.999<br /> <strong>Contribution:<\/strong> 5.49<br /> <strong>Count:<\/strong> 708","<strong>MEX<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.059<br /> <strong>Axis 2 :<\/strong> -0.223<br /> <strong>Squared cosinus:<\/strong> 0.637<br /> <strong>Contribution:<\/strong> 0.681<br /> <strong>Count:<\/strong> 805","<strong>MLI<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.696<br /> <strong>Axis 2 :<\/strong> 0.453<br /> <strong>Squared cosinus:<\/strong> 0.991<br /> <strong>Contribution:<\/strong> 5.514<br /> <strong>Count:<\/strong> 687","<strong>MYS<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.544<br /> <strong>Axis 2 :<\/strong> 0.034<br /> <strong>Squared cosinus:<\/strong> 0.997<br /> <strong>Contribution:<\/strong> 1.921<br /> <strong>Count:<\/strong> 669","<strong>NGA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.524<br /> <strong>Axis 2 :<\/strong> 0.604<br /> <strong>Squared cosinus:<\/strong> 0.944<br /> <strong>Contribution:<\/strong> 9.085<br /> <strong>Count:<\/strong> 1055","<strong>PAK<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.889<br /> <strong>Axis 2 :<\/strong> 0.53<br /> <strong>Squared cosinus:<\/strong> 0.996<br /> <strong>Contribution:<\/strong> 20.307<br /> <strong>Count:<\/strong> 1664","<strong>PER<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.198<br /> <strong>Axis 2 :<\/strong> -0.182<br /> <strong>Squared cosinus:<\/strong> 0.519<br /> <strong>Contribution:<\/strong> 0.685<br /> <strong>Count:<\/strong> 743","<strong>POL<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.28<br /> <strong>Axis 2 :<\/strong> -0.317<br /> <strong>Squared cosinus:<\/strong> 0.818<br /> <strong>Contribution:<\/strong> 1.106<br /> <strong>Count:<\/strong> 461","<strong>PSE<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -1.037<br /> <strong>Axis 2 :<\/strong> 0.635<br /> <strong>Squared cosinus:<\/strong> 0.999<br /> <strong>Contribution:<\/strong> 12.971<br /> <strong>Count:<\/strong> 765","<strong>RUS<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.082<br /> <strong>Axis 2 :<\/strong> -0.259<br /> <strong>Squared cosinus:<\/strong> 0.988<br /> <strong>Contribution:<\/strong> 1.023<br /> <strong>Count:<\/strong> 878","<strong>SEN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.398<br /> <strong>Axis 2 :<\/strong> 0.051<br /> <strong>Squared cosinus:<\/strong> 0.975<br /> <strong>Contribution:<\/strong> 1.069<br /> <strong>Count:<\/strong> 682","<strong>SVK<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -0.159<br /> <strong>Axis 2 :<\/strong> -0.377<br /> <strong>Squared cosinus:<\/strong> 0.999<br /> <strong>Contribution:<\/strong> 2.199<br /> <strong>Count:<\/strong> 855","<strong>SWE<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.011<br /> <strong>Axis 2 :<\/strong> -0.366<br /> <strong>Squared cosinus:<\/strong> 0.967<br /> <strong>Contribution:<\/strong> 2.055<br /> <strong>Count:<\/strong> 939","<strong>TUR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> -1.189<br /> <strong>Axis 2 :<\/strong> 0.788<br /> <strong>Squared cosinus:<\/strong> 0.988<br /> <strong>Contribution:<\/strong> 21.294<br /> <strong>Count:<\/strong> 896","<strong>TZA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.024<br /> <strong>Axis 2 :<\/strong> 0.29<br /> <strong>Squared cosinus:<\/strong> 1<br /> <strong>Contribution:<\/strong> 0.842<br /> <strong>Count:<\/strong> 608","<strong>UGA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.513<br /> <strong>Axis 2 :<\/strong> 0.31<br /> <strong>Squared cosinus:<\/strong> 0.982<br /> <strong>Contribution:<\/strong> 3.816<br /> <strong>Count:<\/strong> 930","<strong>UKR<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.001<br /> <strong>Axis 2 :<\/strong> -0.093<br /> <strong>Squared cosinus:<\/strong> 0.111<br /> <strong>Contribution:<\/strong> 0.066<br /> <strong>Count:<\/strong> 465","<strong>USA<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.772<br /> <strong>Axis 2 :<\/strong> 0.429<br /> <strong>Squared cosinus:<\/strong> 0.961<br /> <strong>Contribution:<\/strong> 17.126<br /> <strong>Count:<\/strong> 1957","<strong>VEN<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.005<br /> <strong>Axis 2 :<\/strong> -0.012<br /> <strong>Squared cosinus:<\/strong> 0.002<br /> <strong>Contribution:<\/strong> 0.002<br /> <strong>Count:<\/strong> 778","<strong>ZAF<\/strong><br /> <strong>Position:<\/strong> Row<br /> <strong>Axis 1 :<\/strong> 0.269<br /> <strong>Axis 2 :<\/strong> 0.109<br /> <strong>Squared cosinus:<\/strong> 0.8<br /> <strong>Contribution:<\/strong> 0.819<br /> <strong>Count:<\/strong> 919"],"tooltip_position_x":"right","tooltip_position_y":"bottom","has_custom_tooltips":true,"click_callback":null,"init_callback":null,"zoom_callback":null,"zoom_on":null,"zoom_on_level":null,"disable_wheel":false,"fixed":true,"legend_width":150,"left_margin":30,"html_id":"scatterD3-IHLIURBP","xlim":[-1.42,1.19],"ylim":[-1.21,1.39],"x_categorical":false,"y_categorical":false,"x_levels":null,"y_levels":null,"menu":true,"lasso":false,"lasso_callback":null,"dom_id_reset_zoom":"scatterD3-reset-zoom","dom_id_svg_export":null,"dom_id_lasso_toggle":null,"transitions":true,"axes_font_size":"100%","legend_font_size":"100%","caption":null,"lines":{"slope":[0,null],"intercept":[0,0],"stroke_dasharray":[5,5]},"hashes":{"x":"53b5b7f01ff32e9bff8c3b49a348849d70bfe168795b632c425447b99fe2ad7c","y":"6e5af1aa774ebfc5b3afbf7bbbb296539c9eb2bff5d0c2bd8d50da5615efff33","lab":"12b1b08edb1eb8a039797325cabed90a81d0e2ced19b5aeb36f40505c7cbd043","key_var":"4718545c8bbd5d1ee1b5b7dfb93b4d1d1537882bb2a4e61a6e4ee398e67d7f23","col_var":"08c67971e344b3891a654a00573149d8aca8f06be8ca5243193b8edd7e12bfd5","symbol_var":"71557d1c8bac9bbe3cbec8d00bb223a2f372279827064095447e569fbf5a760a","size_var":"9fbe060eb94794879c187f1cb8b7c2c81087704d123ae802cea38933c8b9edcc","ellipses_data":"28df520b992b4a4bead0a7a527ee2f4fc64fbcc2892ab364f676113761cbeefc","opacity_var":"71557d1c8bac9bbe3cbec8d00bb223a2f372279827064095447e569fbf5a760a","lines":"f84bf8f8ee4b4297d647ec13b5d4362c022c90688f8d9efa8b45e3c4bef3e7fa","labels_positions":"db472a8d1bfeba7ae899342b3bc05fc748ad32b6091bff1656d992bd94e6a53b"}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li><p>The figure reveals clearly a “Guttman effect” which means that axis 1 and 2 should not be interprated separately but jointly. The countries are indeed distributed on a parabol that follow the order of opinions from the most unfavorable (topleft) to the moderate (bottom center) and the most favorable (topright).</p></li>
+<li><p>But the countries are not regularly distributed along the parabol and we can easily identify clusters of countries sharing the same opinion on USA in 2007 : very unfavorable in arabic and muslim countries but also in Argentina ; very favorable in subsaharan Africa, Israel and USA ; moderate and equilibrated in other countries.</p></li>
+</ul>
+<p>But <strong>this result is only a snapshot of the situation in 2007 and what we have to perform in next step is an analysis of the dynamic of positions of countries through time</strong>.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2024, Claude Grasland</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

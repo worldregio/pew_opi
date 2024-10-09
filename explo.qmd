@@ -1,0 +1,341 @@
+---
+title: "Exploration of the opinions about USA, China and Russia"
+---
+
+
+```{r, echo=FALSE}
+library(knitr)
+opts_chunk$set(echo=FALSE,
+               cache=FALSE,
+               prompt=FALSE,
+               tidy=FALSE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE,
+               options(scipen=999))
+library(dplyr,warn.conflicts = F, quietly=T)
+library(tidyr)
+library(ggplot2)
+library(knitr)
+library(reshape2)
+library(sf)
+library(mapsf)
+don<-readRDS("data/pew_all_opi.RDS") %>% rename(rel = opi_rel)
+```
+
+
+We have presented in a previous post the database that we have elaborated on the basis of the Global Attitude Survey in order to follow the evolution of world opinion about the three major powers that are USA, China and Russia.
+
+Before to develop more sophisticated analysis on polarisation, we will try here to propose simple explorations of data in order to check the quality and shortcomings of the data.
+
+We remind briefly the structure of the database of 617345 observation and 18 variables.  
+
+```{r}
+don<-readRDS("data/pew_all_opi.RDS")
+kable(tail(don,4))
+```
+
+## I. Evolution of the opinion of UK citizens about USA (2002-2023)
+
+Let's take a example the evolution of the evolution of the opinion of inhabitants of one country about another. We will use the case of the opinion of UK citizens on USA as it is one case where the survey has been realized every year from 2002 to 2023. In the majority of case, we don't have complete time series. 
+
+### Data selection
+
+```{r}
+sel <- don %>% filter(sta=="GBR") %>% 
+               mutate(opi=opi_USA) %>%
+               select(wav, wgt, sex, age, opi) %>%
+               filter(is.na(age)==F)
+
+summary(sel)
+kable(head(sel))
+```
+
+### Opinions by years 
+
+Keeping all modalities of answer, we can create a weighted table of answers with as many lines as wawes of wurvey and as many columns as possibilities of choices.
+
+
+```{r}
+tabopi <- sel %>% group_by(wav, opi) %>%
+                  summarise(n = sum(wgt)) %>%
+                  pivot_wider(names_from = opi,
+                              values_from = n,
+                              values_fill = 0)
+kable(tabopi, 
+      digits=0, 
+      caption = "Opinions of UK on USA (raw count)",)
+```
+
+We can easily transform the table in percentage for a better visualisation of the probability of opinion of each type :
+
+
+```{r}
+tabpro<-as.data.frame(tabopi[,-1])
+row.names(tabpro)<-tabopi$wav
+tabpro<-as.data.frame(100*prop.table(as.matrix(tabpro),1))
+kable(tabpro, 
+      digits=1, 
+      caption = "Opinions of UK on USA (%)",)
+```
+
+We can now produce different time series according to our hypothesis on the phenomena under investigation. 
+
+### Who has an opinion ?
+
+We can firstly investigate the % of people that refused to answer or did not made a choice.
+
+```{r,message=FALSE}
+tabpro %>% mutate(No = (DK+Refused),
+                  year = as.numeric(row.names(tabpro))) %>%
+           ggplot() + aes(x=year,y=No) +
+           geom_line(col="black") +
+           geom_point(col="black") +
+           geom_smooth(col="black",lty=2) +
+           scale_x_continuous("Year of survey") +
+           scale_y_continuous("% of answers",limits = c(0,NA)) +
+             geom_vline(xintercept = 2004.5, lty=3) +
+           geom_vline(xintercept = 2008.5, lty=2) +
+            geom_vline(xintercept = 2012.5, lty=3) +
+           geom_vline(xintercept = 2016.5, lty=2) +
+           geom_vline(xintercept = 2020.5, lty=2) +
+           geom_text(aes(x=2005, y=0, label = "G.W. Bush"))+
+           geom_text(aes(x=2012, y=0, label = "B. Obama"))+  
+           geom_text(aes(x=2019, y=0, label = "D. Trump"))+  
+           geom_text(aes(x=2023, y=0, label = "J. Biden"))+   
+           ggtitle(label = "Opinion of UK on USA: don't know or refused to answer",subtitle = "Source : Pew Research Center, Global Attitude Survey")
+```
+
+As we can see the evolution of this parameter is characterized by a slow increase of people without opinion between 2002 and 2016, between 8 and 10% of the sample. But after the election of D. Trump in 2017, the proportion of people without opinion declined dramatically to less than 5 % and the election of J. Biden did not modify the situation.
+
+### Polarisation of opinion
+
+This first results are in line with another analysis related to the choice of extreme situation of the Likert scale. The figure below indicates the proportion of people that has chosen the answers "very favorable" or "very unfavorable". 
+
+```{r,message=FALSE, warning=FALSE}
+tabpro %>% mutate(Ext = (`Very unfavorable`+`Very favorable`),
+                  Mod = (`Somewhat unfavorable`+`Somewhat favorable`),
+                  Extpct=100*Ext/(Ext+Mod),
+                  year = as.numeric(row.names(tabpro))) %>%
+           ggplot() + aes(x=year,y=Extpct) +
+           geom_line(col="black") +
+           geom_point(col="black") +
+           geom_smooth(col="black",lty=2) +
+           scale_x_continuous("Year of survey") +
+           scale_y_continuous("% of extreme opinions") + 
+           geom_vline(xintercept = 2004.5, lty=3) +
+           geom_vline(xintercept = 2008.5, lty=2) +
+            geom_vline(xintercept = 2012.5, lty=3) +
+           geom_vline(xintercept = 2016.5, lty=2) +
+           geom_vline(xintercept = 2020.5, lty=2) +
+           geom_text(aes(x=2005, y=15, label = "G.W. Bush"))+
+           geom_text(aes(x=2012, y=15, label = "B. Obama"))+  
+           geom_text(aes(x=2019, y=15, label = "D. Trump"))+  
+           geom_text(aes(x=2023, y=15, label = "J. Biden"))+    
+           ggtitle(label = "Opinion of UK on USA: Polarisation",subtitle = "Source : Pew Research Center, Global Attitude Survey")
+```
+
+We notice here a high polarisation in 2002 (probably in relation with September 11 and the "war to terrorism" of G.W. Bush). But we reach the lowest level of polarisation in 2010-2014 during the presidency of B.Obama. The polarisation increase slowly during the second presidency of Obama and dramatically with the election of D. Trump. J. Biden election is characterized by a reduction of polarisation. 
+
+
+### Balance of opinion.
+
+We use here the classical index of attraction-repulsion $I$ to evaluate the balance of positive and negative opinion. 
+
+$I = \frac{Favorable-Unfavorable}{Favorable+Unfavorable}$
+
+```{r,message=FALSE, warning=FALSE}
+tabpro %>% mutate(Pos = (`Very favorable`+`Somewhat favorable`),
+                  Neg = (`Very unfavorable`+`Somewhat unfavorable`),
+                  Bal = (Pos-Neg)/(Pos+Neg),
+                  year = as.numeric(row.names(tabpro))) %>%
+           ggplot() + aes(x=year,y=Bal) +
+           geom_line(col="black") +
+           geom_point(col="black") +
+           geom_smooth(col="black",lty=2) +
+           scale_x_continuous("Year of survey") +
+           scale_y_continuous("Index of attraction-repulsion") + 
+           geom_vline(xintercept = 2004.5, lty=3) +
+           geom_vline(xintercept = 2008.5, lty=2) +
+            geom_vline(xintercept = 2012.5, lty=3) +
+           geom_vline(xintercept = 2016.5, lty=2) +
+           geom_vline(xintercept = 2020.5, lty=2) +
+           geom_text(aes(x=2005, y=-0.3, label = "G.W. Bush"))+
+           geom_text(aes(x=2012, y=-0.3, label = "B. Obama"))+  
+           geom_text(aes(x=2019, y=-0.3, label = "D. Trump"))+  
+           geom_text(aes(x=2023, y=-0.3, label = "J. Biden"))+    
+           ggtitle(label = "Opinion of UK on USA: Balance of opinions",subtitle = "Source : Pew Research Center, Global Attitude Survey")
+```
+
+Finally we can produce the classical diagram of the sum of favorable opinion that reveals expected correlation with the different presidents of the US. But this figure is only one component of the analysis and the two previous one about opinion and polarisation are certainly as much important. 
+
+### Trajectory with CA
+
+We can use a **correspondance analysis** in order to visualize the general trajectory of opinions (excluding answers of people that refused or did not answer). The advantage of this statisticial method is to provide a good picture of the period of change or stability of opinion and to identify the most important turning points. 
+
+```{r}
+library(FactoMineR)
+library(explor)
+tabcont<-as.data.frame(tabopi[,c(2,3,4,5)])
+tabcont<-round(tabcont,0)
+row.names(tabcont)<-as.character(tabopi$wav)
+class(tabcont)
+afc<-CA(tabcont, graph = F)
+# explor(afc)
+
+res <- explor::prepare_results(afc)
+explor::CA_var_plot(res, xax = 1, yax = 2, lev_sup = FALSE, var_sup = FALSE,
+    var_sup_choice = , var_hide = "None", var_lab_min_contrib = 0, col_var = "Position",
+    symbol_var = NULL, size_var = "Contrib", size_range = c(52.5, 700), labels_size = 10,
+    point_size = 56, transitions = TRUE, labels_positions = "auto", xlim = c(-0.558,
+        0.641), ylim = c(-0.494, 0.706))
+
+
+```
+
+- The Axis 1 (74% of inertia) is clearly associated to the opposition between favorable opinion (left) and unfavorable opinion (right). The Axis 2 is related to the degree of polarisation that can be higher (top) or lower (down).
+
+- The most extreme situations are observed in 2002 (very favorable opinion) and 2020 (very unfavorable opinion). They are both related to international events that has dramatically influenced the opinion of UK citizens on the US : sympathy in the case of the folow-up of septembr 11. attacks ; antipathy in the case of Trump présidence and covid crisis. These extreme points are generally not observed during a long period and we observe very strong distance between these years and the one located immediately before and after. 
+
+- Looking at the most important distances between two years, we notice very important jumps in 2002-2003 (begining of the second war in Iraq), 2008-2009 (election of Obama), 2016-2017 (election of Trump) and 2020-2021 (election of Biden).
+
+This results suggest that **it is not obvious to evaluate the opinion of a country about USA if we don't have several points of observation through time and, ideally, a complete view of the trajectory.**
+
+
+
+## II. Benchmarking the opinions of different countries about USA in 2007
+
+In this second exploration, we select several countries but only one wave of survey. We choose the year 2007 because it is the one for which we have the maximum of countries (47) and also because it is located just before the crise of subprimes that started in july 2007.
+
+
+### Data selection
+
+```{r}
+don<-readRDS("data/pew_all_opi.RDS")
+sel <- don %>% filter(wav==2007) %>% 
+               mutate(opi=opi_USA) %>%
+               select(sta, wgt, sex, age, opi) %>%
+               filter(is.na(age)==F)
+summary(sel)
+kable(head(sel))
+```
+
+### Opinions by country
+
+Keeping all modalities of answer, we can create a weighted table of answers with as many lines as states of survey and as many columns as possibilities of choices.
+
+
+```{r}
+tabopi <- sel %>% group_by(sta, opi) %>%
+                  summarise(n = sum(wgt)) %>%
+                  pivot_wider(names_from = opi,
+                              values_from = n,
+                              values_fill = 0)
+kable(tabopi, 
+      digits=0, 
+      caption = "Opinions by states on USA in 2017(raw count)",)
+```
+
+We can easily transform the table in percentage for a better visualisation of the probability of opinion of each type :
+
+
+```{r}
+tabpro<-as.data.frame(tabopi[,-1])
+row.names(tabpro)<-tabopi$sta
+tabpro<-as.data.frame(100*prop.table(as.matrix(tabpro),1))
+kable(tabpro, 
+      digits=1, 
+      caption = "Opinions by states on USA in 2007 (%)",)
+```
+
+### Who has an opinion ?
+
+We can firstly investigate the % of people that refused to answer or did not made a choice.
+
+```{r}
+library(forcats)
+tabpro %>% mutate(No = (DK+Refused),
+                  sta = row.names(tabpro)) %>%
+                  arrange(No)  %>%         ggplot(aes(y = fct_reorder(sta,No), x = No)) +
+                    geom_bar(stat="identity") +
+                   scale_x_continuous("% of answers") +
+                   scale_y_discrete("Country of survey") +
+                    ggtitle(label = "Opinion on USA in 2007 : don't know or refused to answer",subtitle = "Source : Pew Research Center, Global Attitude Survey") 
+```
+
+As we can see on the figure, there is a great variability in the proportion of people that has formulated an opinion in the different countries where the survey has been realized. The countries where the maximum of people has refused to answer are Morocco (29%), Uganda (17%), Pakistan (16%) and Tanzania (13%). The reverse situation is observed in Côte d'Ivoire, France, and Lebanon where less than 1% of people did not formulated an opinion on USA. 
+
+
+### Polarisation
+
+We can then investigate the degree of polarisation, defined as the proportion of people that used the extreme values of the likert scale.
+
+```{r}
+library(forcats)
+tabpro %>% mutate(Ext = (`Very unfavorable`+`Very favorable`),
+                  Mod = (`Somewhat unfavorable`+`Somewhat favorable`),
+                  Extpct=100*Ext/(Ext+Mod),
+                  sta=row.names(tabpro)) %>%
+                  arrange(Extpct)  %>%
+                  ggplot(aes(y = fct_reorder(sta,Extpct), x = Extpct)) +
+                    geom_bar(stat="identity") +
+                   scale_x_continuous("% of extreme opinions") +
+                   scale_y_discrete("Country of survey") +
+                    ggtitle(label = "Opinion on USA in 2007 : Polarisation",subtitle = "Source : Pew Research Center, Global Attitude Survey") 
+```
+
+The most important levels of polarisation are observed in countries from Middle East characterized by very negative opinion of USA (Turkey, Palestiniant territories, Jordan, Pakistan, ...) but also in countries from subsaharan Africa characterised by very positive opinion of USA (Nigeria, Côte d'ivoire, Mali, ...). The countries with low level of polarisation are rather located in Asia (Korea, China, Japan, ...), Europe (Czech republic, Italia, Poland, ...) and Latin America (Brazil, Peru,...).
+
+
+### Balance of favorable and unfavorable opinions
+
+We use here the classical index of attraction-repulsion $I$ to evaluate the balance of positive and negative opinion. 
+
+$I = \frac{Favorable-Unfavorable}{Favorable+Unfavorable}$
+
+
+```{r}
+library(forcats)
+tabpro %>% mutate(Pos = (`Very favorable`+`Somewhat favorable`),
+                  Neg = (`Very unfavorable`+`Somewhat unfavorable`),
+                  Bal = (Pos-Neg)/(Pos+Neg),
+                  sta = row.names(tabpro)) %>%
+                  arrange(Pos)  %>%
+                  ggplot(aes(y = fct_reorder(sta,Bal), x = Bal)) +
+                    geom_bar(stat="identity") +
+                   scale_x_continuous("Synthetic index of attraction-repulsion") +
+                   scale_y_discrete("Country of survey") +
+                    ggtitle(label = "Opinion on USA in 2007 : Balance of opinions",subtitle = "Source : Pew Research Center, Global Attitude Survey") 
+```
+
+The index of attraction-repulsion is theoretically bounded between -1 (all opinions are unfavorable) and + 1 (all opinions are favorable) with an equilibrium around 0 (equal number of favorable and unfavorable opinions).  In present case, we observe a very strong diversity of positions from -0.81 in Turkey to +0.77 in Ivory Coast. The countries are to some extent clustered in regions with very negative opinions in Middle east and very positive in subsaharan Africa. But they are exceptions and we should not conclude too quickly because it is possible that people has systematically provide positive or negative answers to foreign countries proposed to their evaluation. As we will see later, the absolute opinion on USA is less interesting than the comparison between USA and other countries of reference like Chinaor Russia. 
+
+
+### Mapping with CA
+
+We can use a **correspondance analysis** in order to visualize the positions of countries about USA. We will obtain by this method a *map* of the world opinion where distance between positions reveals differences in opinions.  
+
+```{r}
+library(FactoMineR)
+library(explor)
+tabcont<-as.data.frame(tabopi[,c(2,3,4,5)])
+tabcont<-round(tabcont,0)
+row.names(tabcont)<-as.character(tabopi$sta)
+
+afc<-CA(tabcont, graph=F)
+#explor(afc)
+
+res <- explor::prepare_results(afc)
+explor::CA_var_plot(res, xax = 1, yax = 2, lev_sup = FALSE, var_sup = FALSE,
+    var_sup_choice = , var_hide = "None", var_lab_min_contrib = 0, col_var = "Position",
+    symbol_var = NULL, size_var = "Contrib", size_range = c(52.5, 700), labels_size = 10,
+    point_size = 56, transitions = TRUE, labels_positions = "auto", xlim = c(-1.42,
+        1.19), ylim = c(-1.21, 1.39))
+
+```
+
+- The figure reveals clearly a "Guttman effect" which means that axis 1 and 2 should not be interprated separately but jointly. The countries are indeed distributed on a parabol that follow the order of opinions from the most unfavorable (topleft) to the moderate (bottom center) and the most favorable (topright).
+
+- But the countries are not regularly distributed along the parabol and we can easily identify clusters of countries sharing the same opinion on USA in 2007 : very unfavorable in arabic and muslim countries but also in Argentina ; very favorable in subsaharan Africa, Israel and USA ; moderate and equilibrated in other countries. 
+
+But **this result is only a snapshot of the situation in 2007 and what we have to perform in next step is an analysis of the dynamic of positions of countries through time**.

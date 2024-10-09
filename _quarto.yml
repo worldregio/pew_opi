@@ -12,6 +12,8 @@ website:
         text: "Author"
       - href: data.qmd
         text: "Data"
+      - href: explo.qmd
+        text: "Exploration"
     right: 
       - icon: github # add icons as navbar buttons
         href: https://github.com/worldregio/pew_opi
