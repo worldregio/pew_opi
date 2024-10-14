@@ -1,0 +1,266 @@
+---
+title: "Modelisation of opinion through space and time"
+---
+
+
+```{r, echo=FALSE}
+library(knitr)
+opts_chunk$set(echo=FALSE,
+               cache=FALSE,
+               prompt=FALSE,
+               tidy=FALSE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+library(dplyr,warn.conflicts = F, quietly=T)
+library(tidyr)
+library(ggplot2)
+library(knitr)
+library(reshape2)
+library(data.table)
+library(sf)
+library(mapsf)
+library(RColorBrewer)
+library(car)
+don<-readRDS("data/pew_all_opi.RDS") %>% rename(rel = opi_rel)
+```
+
+
+We have presented in a previous post the database that we have elaborated on the basis of the Global Attitude Survey in order to follow the evolution of world opinion about the three major powers that are USA, China and Russia.
+
+We remind briefly the structure of the database of 617345 observation and 18 variables.  
+
+```{r}
+don<-readRDS("data/pew_all_opi.RDS")
+kable(tail(don,4))
+```
+
+## Hypercube structure
+
+In order to have a better formalisation of the data, we will transform the database in a multidimensional structure where each opinion will be describe by a single variable $O_{ijt}$ where :
+
+- $O$ is an opinion measured on a Likert scale with 4 levels (*"Very favorable", "Almost favorable", "Almost unfavorable","Very Unfavorable"*)
+- $i$ is the origin of the opinion (i.e. the place of survey where the opinion has been collected)
+- $j$ is the target of the opinion (i.e. the country or organisation that was evaluated). We limit here the value to three case that are USA, China and Russia.
+- $t$ the time period (i.e. wave of survey) of collection of the opinion.
+
+The database is eventually completed by two structural parameter describing the age $A_{it}$ and the sex $S_{it}$ of the person who has formulated the opinion. 
+
+We can eventually cross the results with another variable $R_{it}$ describing the opinion on religion using another Likert scale with 4 levels.
+
+Lest but not least each sample collected in a country i a t time t is associated with a weigthing criteria $W_{it}$ that insure a better representation of the full population.
+
+
+```{r}
+# Opinions on USA
+hc1 <- don %>% filter(is.na(opi_USA)==F) %>%
+               mutate(j="USA") %>%
+               select(i=sta, j,t=wav,  Oijt=opi_USA, Wit = wgt, Ait=age,Sij=sex, Rit=opi_rel)
+
+hc2 <- don %>% filter(is.na(opi_RUS)==F) %>%
+               mutate(j="RUS") %>%
+               select(i=sta, j,t=wav,  Oijt=opi_RUS, Wit = wgt, Ait=age,Sij=sex,Rit=opi_rel)
+
+hc3 <- don %>% filter(is.na(opi_CHN)==F) %>%
+               mutate(j="CHN") %>%
+               select(i=sta, j,t=wav,  Oijt=opi_CHN, Wit = wgt, Ait=age,Sij=sex,Rit=opi_rel)
+
+
+hc4 <- don %>% filter(is.na(opi_EU)==F) %>%
+               mutate(j="EUR") %>%
+               select(i=sta, j,t=wav,  Oijt=opi_EU, Wit = wgt, Ait=age,Sij=sex,Rit=opi_rel)
+
+
+hc<-data.table(rbind(hc1,hc2,hc3, hc4))
+hc$t<-as.factor(hc$t)
+head(hc)
+```
+
+
+
+## Logit model
+
+We transform Oijt in a boolean variable Fijt related to favorable opinion and we eliminate people without opinion
+
+```{r}
+hc2<-hc[!Oijt %in% c("DK","Refused"), .(i,j,t,Ait,Sij,Wit,Fijt=Oijt %in% c("Very favorable","Somewhat favorable")) ]
+head(hc2)
+```
+
+
+
+We can now examine different marginal models describing the effects of the dimensions $i,j,t$ and their combination.
+
+### Variation of opinion from origin countries (i)
+
+We can firstly analyze if some countries are more likely than others to provide positive opinions to our three target countries.
+
+```{r}
+library(car)
+tab<-hc2[,.(n=round(sum(Wit))),.(i,Fijt)]
+mod_i<-glm(formula = Fijt ~i,
+           weights = n,
+           family ="binomial",
+           data=tab)
+Anova(mod_i)
+```
+
+We obtain a list of coefficients that indicates the country that are the most likely to provide favorable opinion, whatever the target country.
+
+```{r}
+coeff<-data.frame(i = substr(names(mod_i$coefficients),2,4),
+                  alpha_i = mod_i$coefficients)
+coeff[1,1]="AGO"
+
+#coeff<-coeff[order(-coeff$alpha_i),]
+#row.names(coeff)<-NULL
+#kable(coeff, caption = "General opinion of countries on four world powers", digits=2)
+coeff_i<-coeff
+```
+
+```{r}
+map<-readRDS("data/world_map.Rdata")
+map<-merge(map,coeff_i, by.x="ISO3",by.y="i",all.x=T, all.y=F)
+mypal<-brewer.pal(n = 5,name = "RdYlBu")
+mf_map(x=map, 
+       type="choro", 
+       pal=mypal,
+       nbreaks = 5,
+       var="alpha_i", 
+       leg_title = "quantiles",
+       col_na = "gray80")
+mf_layout(title = "Coefficients of global opinion of survey countries on world powers (USA, CHN, RUS, EU)",
+          credits = "(c) Gradland C., 2024 - Source : Global Attitude Survey",
+          frame=T,scale = F, arrow=F)
+```
+
+
+
+
+
+- **Comment** : we observe a fascinating economic and geographic division between countries that provide generally postive opinion (poor or african, ...) and countries that are more likely to provide negativ opinion (rich or middle east ). Of course this result has to be confirmed because the countries has not been surveyed at the same period of time but we keep this result in mind
+
+
+
+### Variation of opinion about target countries (j)
+
+We can  analyze  ow the variations of opinion of our target countries 
+
+```{r}
+library(car)
+tab<-hc2[,.(n=round(sum(Wit))),.(j,Fijt)]
+head(tab)
+mod_j<-glm(formula = Fijt ~j,
+           weights = n,
+           family ="binomial",
+           data=tab)
+Anova(mod_j)
+```
+
+We obtain a list of coefficients that indicates the target countries that are the most likely to receive favorable opinion, whatever the country of origin.
+
+```{r}
+coeff<-data.frame(j = substr(names(mod_j$coefficients),2,4),
+                  beta_j = mod_j$coefficients)
+coeff[1,1]="CHN"
+coeff<-coeff[order(-coeff$beta_j),]
+row.names(coeff)<-NULL
+kable(head(coeff, 10), caption = "Score of world powers in global opinion")
+coeff_j=coeff
+```
+
+- **Comment** : Without control on the time period or the countries of origin, we can say that the most positive opinion is received by EU, followed by China and US. Russia is clearly the target country that has received the most negative opinion over the period of observation. 
+
+
+### Variation of global opinions throught time (t)
+
+Without considering origin or target countries anymore, do we observe trends in the expression of positive opinion over time ?
+
+
+We can firstly analyze if some countries are more likely than others to provide positive opinions to our three target countries.
+
+```{r}
+
+tab<-hc2[,.(n=round(sum(Wit))),.(t,Fijt)]
+mod_t<-glm(formula = Fijt ~t,
+           weights = n,
+           family ="binomial",
+           data=tab)
+Anova(mod_t)
+
+```
+
+We obtain a list of coefficients that indicates the country that are the most likely to provide favorable opinion, whatever the target country.
+
+```{r}
+coeff<-data.frame(t = substr(names(mod_t$coefficients),2,5),
+                  gamma_t = mod_t$coefficients)
+coeff[1,1]="2002"
+coeff$t<-as.numeric(coeff$t)
+ggplot(data=coeff) + aes(x=t, y=gamma_t) +
+                   geom_line() +
+                   geom_point() +
+                   geom_smooth(method="lm",col="red") +
+                   scale_x_continuous("Wave of survey")+
+                   scale_y_continuous("Trend of favorable opinions")+
+                   ggtitle("Global trend of opinions on world powers (USA, CHN  RUS, EU)",
+                           subtitle = "Source : Global Attitude Survey, Pew research Center (202-2023")
+                     
+coeff_t=coeff
+```
+
+- **Comment** : if we exclude the chaotic variation of the beginning period 2002-2004, we can notice a clear trend of decline of the share of positive opinion about the four world powers that we have selected. But as in the previous analysis we can not exclude here an effect of selection of origin and target countries in the different waves. 
+
+### Joint analysis of marginal effects (i,j,t)
+
+We can obtain more accurate evaluation by introducing all marginal effects together in order to control their relative influences on the results.
+
+```{r}
+
+tab<-hc2[,.(n=round(sum(Wit))),.(i,j,t,Fijt)]
+mod_i_j_t<-glm(formula = Fijt ~i+j+t,
+           weights = n,
+           family ="binomial",
+           data=tab)
+Anova(mod_i_j_t)
+```
+
+This does not really modify the results presented above but introduce some corrections. 
+
+
+### Cross analysis of j through i:t
+
+
+```{r}
+
+tab<-hc2[,.(n=round(sum(Wit))),.(i,j,t,Fijt)]
+mod_jt_i<-glm(formula = Fijt ~j:t+i,
+           weights = n,
+           family ="binomial",
+           data=tab)
+Anova(mod_jt_i)
+x<-mod_jt_i$coefficients[71:158]
+res<-data.frame(n=names(x),x)
+res$j<-substr(res$n,2,4)
+res$t<-substr(res$n,7,10)
+res<-res[,c("j","t","x")]
+res$t<-as.numeric(res$t)
+res$x<-res$x-mean(res$x,na.rm=T)
+
+ggplot(res) + aes(x=t,y=x,col=j) +
+            geom_point() +
+            geom_line() +
+            geom_smooth(se = F) +
+            scale_x_continuous("Wave of survey") +
+            scale_y_continuous("Global level of poistive opinion")+
+            ggtitle("Global trend of opinions on world powers (USA, CHN  RUS, EU)",
+           subtitle = "Source : Global Attitude Survey, Pew research Center (202-2023")
+               
+```
+
+- **Comment :** After elimination of the variations related to countries of origin, we obtain comparative parameter of appreciations of world powers at different period of time and we can draw tendencies through interpolation by loess method. What appears clearly in the figure is a recent divergence between US and European Union on the one hand, China and Russia on the other hand. More precisely :
+  + *European Union* has maintained a good level of appreciation during all the period with apparentlyan increase between 2014 and 2019-23, but difficult to validate because lack of data.
+  + *USA* has experimented a more chaotic trend with ups and downs in relation with the different presidents. But has a whole the general trend appears to be positive during the period.
+  + *China* had initially an excellent position and was the most appreciated world power in 2005-2006 and also 2009-2013. But this favorable appreciation declined regularly and especially in 2020 , probably in relation with the covid crisis.
+  + *Russia* has the same appreciation than USA in 2007-2008 and remained stable with just a slow decline in 2015. But the decrease was very strong after 2019 and the lowest level was reached in 2022-23 with the second war in Ukraine.
+

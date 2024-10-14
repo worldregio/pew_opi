@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>World Polarisation - Modelisation of opinion through space and time</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">World Polarisation</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./author.html" rel="" target="">
+ <span class="menu-text">Author</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./data.html" rel="" target="">
+ <span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./explo.html" rel="" target="">
+ <span class="menu-text">Exploration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./model.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Modelisation</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/worldregio/pew_opi" rel="" target="_blank"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#hypercube-structure" id="toc-hypercube-structure" class="nav-link active" data-scroll-target="#hypercube-structure">Hypercube structure</a></li>
+  <li><a href="#logit-model" id="toc-logit-model" class="nav-link" data-scroll-target="#logit-model">Logit model</a>
+  <ul class="collapse">
+  <li><a href="#variation-of-opinion-from-origin-countries-i" id="toc-variation-of-opinion-from-origin-countries-i" class="nav-link" data-scroll-target="#variation-of-opinion-from-origin-countries-i">Variation of opinion from origin countries (i)</a></li>
+  <li><a href="#variation-of-opinion-about-target-countries-j" id="toc-variation-of-opinion-about-target-countries-j" class="nav-link" data-scroll-target="#variation-of-opinion-about-target-countries-j">Variation of opinion about target countries (j)</a></li>
+  <li><a href="#variation-of-global-opinions-throught-time-t" id="toc-variation-of-global-opinions-throught-time-t" class="nav-link" data-scroll-target="#variation-of-global-opinions-throught-time-t">Variation of global opinions throught time (t)</a></li>
+  <li><a href="#joint-analysis-of-marginal-effects-ijt" id="toc-joint-analysis-of-marginal-effects-ijt" class="nav-link" data-scroll-target="#joint-analysis-of-marginal-effects-ijt">Joint analysis of marginal effects (i,j,t)</a></li>
+  <li><a href="#cross-analysis-of-j-through-it" id="toc-cross-analysis-of-j-through-it" class="nav-link" data-scroll-target="#cross-analysis-of-j-through-it">Cross analysis of j through i:t</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Modelisation of opinion through space and time</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'reshape2'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:tidyr':
+
+    smiths</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'data.table' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'data.table'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:reshape2':
+
+    dcast, melt</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:dplyr':
+
+    between, first, last</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'car'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    recode</code></pre>
+</div>
+</div>
+<p>We have presented in a previous post the database that we have elaborated on the basis of the Global Attitude Survey in order to follow the evolution of world opinion about the three major powers that are USA, China and Russia.</p>
+<p>We remind briefly the structure of the database of 617345 observation and 18 variables.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 1%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">wav</th>
+<th style="text-align: left;">sta</th>
+<th style="text-align: right;">wgt</th>
+<th style="text-align: left;">sex</th>
+<th style="text-align: right;">age</th>
+<th style="text-align: left;">opi_rel</th>
+<th style="text-align: left;">opi_USA</th>
+<th style="text-align: left;">opi_CHN</th>
+<th style="text-align: left;">opi_RUS</th>
+<th style="text-align: left;">opi_UN</th>
+<th style="text-align: left;">opi_EU</th>
+<th style="text-align: left;">opi_IRN</th>
+<th style="text-align: left;">opi_DEU</th>
+<th style="text-align: left;">opi_FRA</th>
+<th style="text-align: left;">opi_JPN</th>
+<th style="text-align: left;">opi_IND</th>
+<th style="text-align: left;">opi_TWN</th>
+<th style="text-align: left;">opi_BRA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">617342</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">ZAF</td>
+<td style="text-align: right;">1.0502763</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">Somewhat important</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Very favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">617343</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">ZAF</td>
+<td style="text-align: right;">0.3254254</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: left;">Very important</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">DK</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">617344</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">ZAF</td>
+<td style="text-align: right;">2.4937630</td>
+<td style="text-align: left;">Male</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: left;">Very important</td>
+<td style="text-align: left;">DK</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">DK</td>
+<td style="text-align: left;">Very unfavorable</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">DK</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">617345</td>
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">ZAF</td>
+<td style="text-align: right;">0.7725435</td>
+<td style="text-align: left;">Female</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: left;">Very important</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">Somewhat favorable</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="hypercube-structure" class="level2">
+<h2 class="anchored" data-anchor-id="hypercube-structure">Hypercube structure</h2>
+<p>In order to have a better formalisation of the data, we will transform the database in a multidimensional structure where each opinion will be describe by a single variable <span class="math inline">\(O_{ijt}\)</span> where :</p>
+<ul>
+<li><span class="math inline">\(O\)</span> is an opinion measured on a Likert scale with 4 levels (<em>“Very favorable”, “Almost favorable”, “Almost unfavorable”,“Very Unfavorable”</em>)</li>
+<li><span class="math inline">\(i\)</span> is the origin of the opinion (i.e.&nbsp;the place of survey where the opinion has been collected)</li>
+<li><span class="math inline">\(j\)</span> is the target of the opinion (i.e.&nbsp;the country or organisation that was evaluated). We limit here the value to three case that are USA, China and Russia.</li>
+<li><span class="math inline">\(t\)</span> the time period (i.e.&nbsp;wave of survey) of collection of the opinion.</li>
+</ul>
+<p>The database is eventually completed by two structural parameter describing the age <span class="math inline">\(A_{it}\)</span> and the sex <span class="math inline">\(S_{it}\)</span> of the person who has formulated the opinion.</p>
+<p>We can eventually cross the results with another variable <span class="math inline">\(R_{it}\)</span> describing the opinion on religion using another Likert scale with 4 levels.</p>
+<p>Lest but not least each sample collected in a country i a t time t is associated with a weigthing criteria <span class="math inline">\(W_{it}\)</span> that insure a better representation of the full population.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>        i      j      t               Oijt       Wit   Ait    Sij    Rit
+   &lt;fctr&gt; &lt;char&gt; &lt;fctr&gt;             &lt;fctr&gt;     &lt;num&gt; &lt;num&gt; &lt;fctr&gt; &lt;fctr&gt;
+1:    AGO    USA   2002     Very favorable 0.4222273    47 Female   &lt;NA&gt;
+2:    AGO    USA   2002 Somewhat favorable 0.4222273    27 Female   &lt;NA&gt;
+3:    AGO    USA   2002 Somewhat favorable 0.4222273    24   Male   &lt;NA&gt;
+4:    AGO    USA   2002 Somewhat favorable 0.4222273    20   Male   &lt;NA&gt;
+5:    AGO    USA   2002     Very favorable 2.0372931    53   Male   &lt;NA&gt;
+6:    AGO    USA   2002     Very favorable 0.4113096    34 Female   &lt;NA&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="logit-model" class="level2">
+<h2 class="anchored" data-anchor-id="logit-model">Logit model</h2>
+<p>We transform Oijt in a boolean variable Fijt related to favorable opinion and we eliminate people without opinion</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>        i      j      t   Ait    Sij       Wit   Fijt
+   &lt;fctr&gt; &lt;char&gt; &lt;fctr&gt; &lt;num&gt; &lt;fctr&gt;     &lt;num&gt; &lt;lgcl&gt;
+1:    AGO    USA   2002    47 Female 0.4222273   TRUE
+2:    AGO    USA   2002    27 Female 0.4222273   TRUE
+3:    AGO    USA   2002    24   Male 0.4222273   TRUE
+4:    AGO    USA   2002    20   Male 0.4222273   TRUE
+5:    AGO    USA   2002    53   Male 2.0372931   TRUE
+6:    AGO    USA   2002    34 Female 0.4113096   TRUE</code></pre>
+</div>
+</div>
+<p>We can now examine different marginal models describing the effects of the dimensions <span class="math inline">\(i,j,t\)</span> and their combination.</p>
+<section id="variation-of-opinion-from-origin-countries-i" class="level3">
+<h3 class="anchored" data-anchor-id="variation-of-opinion-from-origin-countries-i">Variation of opinion from origin countries (i)</h3>
+<p>We can firstly analyze if some countries are more likely than others to provide positive opinions to our three target countries.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table (Type II tests)
+
+Response: Fijt
+  LR Chisq Df Pr(&gt;Chisq)    
+i   100660 69  &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>We obtain a list of coefficients that indicates the country that are the most likely to provide favorable opinion, whatever the target country.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="model_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong>Comment</strong> : we observe a fascinating economic and geographic division between countries that provide generally postive opinion (poor or african, …) and countries that are more likely to provide negativ opinion (rich or middle east ). Of course this result has to be confirmed because the countries has not been surveyed at the same period of time but we keep this result in mind</li>
+</ul>
+</section>
+<section id="variation-of-opinion-about-target-countries-j" class="level3">
+<h3 class="anchored" data-anchor-id="variation-of-opinion-about-target-countries-j">Variation of opinion about target countries (j)</h3>
+<p>We can analyze ow the variations of opinion of our target countries</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>        j   Fijt      n
+   &lt;char&gt; &lt;lgcl&gt;  &lt;num&gt;
+1:    USA   TRUE 329492
+2:    USA  FALSE 234351
+3:    RUS   TRUE 163829
+4:    RUS  FALSE 219425
+5:    CHN  FALSE 218949
+6:    CHN   TRUE 276193</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table (Type II tests)
+
+Response: Fijt
+  LR Chisq Df Pr(&gt;Chisq)    
+j    32941  3  &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>We obtain a list of coefficients that indicates the target countries that are the most likely to receive favorable opinion, whatever the country of origin.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Score of world powers in global opinion</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">j</th>
+<th style="text-align: right;">beta_j</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">EUR</td>
+<td style="text-align: right;">0.2750832</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHN</td>
+<td style="text-align: right;">0.2322611</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">USA</td>
+<td style="text-align: right;">0.1084710</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RUS</td>
+<td style="text-align: right;">-0.5244484</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><strong>Comment</strong> : Without control on the time period or the countries of origin, we can say that the most positive opinion is received by EU, followed by China and US. Russia is clearly the target country that has received the most negative opinion over the period of observation.</li>
+</ul>
+</section>
+<section id="variation-of-global-opinions-throught-time-t" class="level3">
+<h3 class="anchored" data-anchor-id="variation-of-global-opinions-throught-time-t">Variation of global opinions throught time (t)</h3>
+<p>Without considering origin or target countries anymore, do we observe trends in the expression of positive opinion over time ?</p>
+<p>We can firstly analyze if some countries are more likely than others to provide positive opinions to our three target countries.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table (Type II tests)
+
+Response: Fijt
+  LR Chisq Df Pr(&gt;Chisq)    
+t    19349 21  &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>We obtain a list of coefficients that indicates the country that are the most likely to provide favorable opinion, whatever the target country.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="model_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong>Comment</strong> : if we exclude the chaotic variation of the beginning period 2002-2004, we can notice a clear trend of decline of the share of positive opinion about the four world powers that we have selected. But as in the previous analysis we can not exclude here an effect of selection of origin and target countries in the different waves.</li>
+</ul>
+</section>
+<section id="joint-analysis-of-marginal-effects-ijt" class="level3">
+<h3 class="anchored" data-anchor-id="joint-analysis-of-marginal-effects-ijt">Joint analysis of marginal effects (i,j,t)</h3>
+<p>We can obtain more accurate evaluation by introducing all marginal effects together in order to control their relative influences on the results.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table (Type II tests)
+
+Response: Fijt
+  LR Chisq Df Pr(&gt;Chisq)    
+i    93685 69  &lt; 2.2e-16 ***
+j    36039  3  &lt; 2.2e-16 ***
+t     9754 21  &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>This does not really modify the results presented above but introduce some corrections.</p>
+</section>
+<section id="cross-analysis-of-j-through-it" class="level3">
+<h3 class="anchored" data-anchor-id="cross-analysis-of-j-through-it">Cross analysis of j through i:t</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table (Type II tests)
+
+Response: Fijt
+    LR Chisq Df Pr(&gt;Chisq)    
+i      93992 69  &lt; 2.2e-16 ***
+j:t    89531 67  &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="model_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong>Comment :</strong> After elimination of the variations related to countries of origin, we obtain comparative parameter of appreciations of world powers at different period of time and we can draw tendencies through interpolation by loess method. What appears clearly in the figure is a recent divergence between US and European Union on the one hand, China and Russia on the other hand. More precisely :
+<ul>
+<li><em>European Union</em> has maintained a good level of appreciation during all the period with apparentlyan increase between 2014 and 2019-23, but difficult to validate because lack of data.</li>
+<li><em>USA</em> has experimented a more chaotic trend with ups and downs in relation with the different presidents. But has a whole the general trend appears to be positive during the period.</li>
+<li><em>China</em> had initially an excellent position and was the most appreciated world power in 2005-2006 and also 2009-2013. But this favorable appreciation declined regularly and especially in 2020 , probably in relation with the covid crisis.</li>
+<li><em>Russia</em> has the same appreciation than USA in 2007-2008 and remained stable with just a slow decline in 2015. But the decrease was very strong after 2019 and the lowest level was reached in 2022-23 with the second war in Ukraine.</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright 2024, Claude Grasland</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

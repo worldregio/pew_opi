@@ -14,6 +14,8 @@ website:
         text: "Data"
       - href: explo.qmd
         text: "Exploration"
+      - href: model.qmd
+        text: "Modelisation"
     right: 
       - icon: github # add icons as navbar buttons
         href: https://github.com/worldregio/pew_opi
