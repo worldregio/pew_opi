@@ -1,9 +1,10 @@
 ---
-title: "Modelisation of opinion through space and time"
+title: "Modelisation of global opinion "
+subtitle: "Comparison of opinions on USA, China, Russia and EU (2002-2023)"
 ---
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(knitr)
 opts_chunk$set(echo=FALSE,
                cache=FALSE,
@@ -15,6 +16,7 @@ opts_chunk$set(echo=FALSE,
 library(dplyr,warn.conflicts = F, quietly=T)
 library(tidyr)
 library(ggplot2)
+library(gridExtra)
 library(knitr)
 library(reshape2)
 library(data.table)
@@ -22,6 +24,9 @@ library(sf)
 library(mapsf)
 library(RColorBrewer)
 library(car)
+library(FactoMineR)
+library(explor)
+library(ggrepel)
 don<-readRDS("data/pew_all_opi.RDS") %>% rename(rel = opi_rel)
 ```
 
@@ -35,7 +40,7 @@ don<-readRDS("data/pew_all_opi.RDS")
 kable(tail(don,4))
 ```
 
-## Hypercube structure
+## Data preparation
 
 In order to have a better formalisation of the data, we will transform the database in a multidimensional structure where each opinion will be describe by a single variable $O_{ijt}$ where :
 
@@ -73,27 +78,27 @@ hc4 <- don %>% filter(is.na(opi_EU)==F) %>%
 
 hc<-data.table(rbind(hc1,hc2,hc3, hc4))
 hc$t<-as.factor(hc$t)
-head(hc)
+
 ```
 
 
 
-## Logit model
 
 We transform Oijt in a boolean variable Fijt related to favorable opinion and we eliminate people without opinion
 
 ```{r}
-hc2<-hc[!Oijt %in% c("DK","Refused"), .(i,j,t,Ait,Sij,Wit,Fijt=Oijt %in% c("Very favorable","Somewhat favorable")) ]
-head(hc2)
+hc2<-hc[!Oijt %in% c("DK","Refused"), .(i,j,t,Wit,Fijt=Oijt %in% c("Very favorable","Somewhat favorable")) ]
+kable(head(hc2), caption = "Result of data preparation", digits=3,
+      col.names = c("Origin (i)", "Target (j)", "Time (t)", "Weight(ijt)", "Favorable opinion (Fijt)"))
 ```
-
-
 
 We can now examine different marginal models describing the effects of the dimensions $i,j,t$ and their combination.
 
-### Variation of opinion from origin countries (i)
+## Opinion from origin countries (i)
 
 We can firstly analyze if some countries are more likely than others to provide positive opinions to our three target countries.
+
+$log \frac{p}{1-p} = \alpha + \beta_i.Origin_i$
 
 ```{r}
 library(car)
@@ -141,10 +146,12 @@ mf_layout(title = "Coefficients of global opinion of survey countries on world p
 - **Comment** : we observe a fascinating economic and geographic division between countries that provide generally postive opinion (poor or african, ...) and countries that are more likely to provide negativ opinion (rich or middle east ). Of course this result has to be confirmed because the countries has not been surveyed at the same period of time but we keep this result in mind
 
 
-
-### Variation of opinion about target countries (j)
+## Opinion about target countries (j)
 
 We can  analyze  ow the variations of opinion of our target countries 
+
+
+$log \frac{p}{1-p} = \alpha + \gamma_j.target_j$
 
 ```{r}
 library(car)
@@ -172,10 +179,11 @@ coeff_j=coeff
 - **Comment** : Without control on the time period or the countries of origin, we can say that the most positive opinion is received by EU, followed by China and US. Russia is clearly the target country that has received the most negative opinion over the period of observation. 
 
 
-### Variation of global opinions throught time (t)
+## Opinions through time (t)
 
 Without considering origin or target countries anymore, do we observe trends in the expression of positive opinion over time ?
 
+$log \frac{p}{1-p} = \alpha + \delta_t.time_t$
 
 We can firstly analyze if some countries are more likely than others to provide positive opinions to our three target countries.
 
@@ -215,6 +223,9 @@ coeff_t=coeff
 
 We can obtain more accurate evaluation by introducing all marginal effects together in order to control their relative influences on the results.
 
+$log \frac{p}{1-p} = \alpha + \beta_i.origin_i + \gamma_j.target_j + \delta_t.time_t$
+
+
 ```{r}
 
 tab<-hc2[,.(n=round(sum(Wit))),.(i,j,t,Fijt)]
@@ -228,7 +239,11 @@ Anova(mod_i_j_t)
 This does not really modify the results presented above but introduce some corrections. 
 
 
-### Cross analysis of j through i:t
+### Evolution of opinion on target countries
+
+
+$log \frac{p}{1-p} = \alpha + \beta_i.origin_i + \phi_{jt}.[target\times time]_{jt}$
+
 
 
 ```{r}
@@ -254,7 +269,7 @@ ggplot(res) + aes(x=t,y=x,col=j) +
             scale_x_continuous("Wave of survey") +
             scale_y_continuous("Global level of poistive opinion")+
             ggtitle("Global trend of opinions on world powers (USA, CHN  RUS, EU)",
-           subtitle = "Source : Global Attitude Survey, Pew research Center (202-2023")
+           subtitle = "Source : Global Attitude Survey, Pew research Center (2002-2023)")
                
 ```
 
@@ -263,4 +278,148 @@ ggplot(res) + aes(x=t,y=x,col=j) +
   + *USA* has experimented a more chaotic trend with ups and downs in relation with the different presidents. But has a whole the general trend appears to be positive during the period.
   + *China* had initially an excellent position and was the most appreciated world power in 2005-2006 and also 2009-2013. But this favorable appreciation declined regularly and especially in 2020 , probably in relation with the covid crisis.
   + *Russia* has the same appreciation than USA in 2007-2008 and remained stable with just a slow decline in 2015. But the decrease was very strong after 2019 and the lowest level was reached in 2022-23 with the second war in Ukraine.
+
+
+
+## Average opinion of origin countries on target countries
+
+$log \frac{p}{1-p} = \alpha + \delta_t.time_t + \tau_{jt}.[origin\times target]_{ij}$
+
+We try here to evaluate the global attraction/repulsion of survey countries about target powers over the whole period of investigation. We introduce just a control of the time (t) before to extract the parameter i:j which measure an average opinion on the four world powers. We elimlinate the survey countries that has not formulated an opinion on all the four powers. We eliminate also USA, China and Russia.
+
+
+```{r}
+
+tab<-hc2[,.(n=round(sum(Wit))),.(i,j,t,Fijt)]
+mod_ij_t<-glm(formula = Fijt ~i:j+t,
+           weights = n,
+           family ="binomial",
+           data=tab)
+Anova(mod_ij_t)
+x<-mod_ij_t$coefficients
+x<-x[23:302]
+res<-data.frame(n=names(x),x)
+res$i<-substr(res$n,2,4)
+res$j<-substr(res$n,7,9)
+res<-res[,c("i","j","x")]
+
+tab<-reshape2::dcast(res, formula=i~j)
+tab2<-data.frame(tab[,2:5])
+row.names(tab2)<-tab$i
+tab3<-tab2[complete.cases(tab2),]
+
+tab3<-tab3[!row.names(tab3) %in% c("USA","CHN","RUS"),]
+
+#kable(tab3, digits=2)
+               
+```
+
+We proceed then to a Principal Component Analysis in order to evaluate the structure obtained.
+
+```{r}
+acp <- PCA(tab3, graph = F)
+#explor(acp)
+acpcoo<-data.frame(acp$ind$coord)
+names(acpcoo)<-c("coo1","coo2","coo3","coo4")
+acpctr<-data.frame(acp$ind$contrib)
+names(acpctr)<-c("ctr1","ctr2","ctr3","ctr4")
+acpres<-cbind(acpcoo,acpctr)
+
+plot_a<-plot.PCA(acp,choix = "varcor",axes = c(1,2))
+plot_b<-plot.PCA(acp,choix = "varcor",axes = c(3,4))
+
+gridExtra::grid.arrange(
+    plot_a,
+    plot_b,
+    ncol = 2
+)
+
+```
+
+We notice that the two first dimension summarize more than 80% of the information and only minor details are collected by dimension three and four. 
+
+- Dim1 reveals a **general opinion on the four world powers** that can be generally positive (*right*) or generally negative (*left*).
+- Dim2 reveals a **polarisation between the 'Western and the Rest' or, said differently, between 'Global North and Global South'**. Countries located on the top are more favorable to Russia and China than to the US and EU. Countries on the bottom are characterized by the opposite.
+- Dim3 characterized specific situations of **dissociation between preferences for China and Russia** that can for example happen in the case of Vietnam.
+- Dim4 characterized excpetional cases of **dissociation between preferences for US and Europe** that can for example happen in the case of UK. 
+
+
+
+We can now examine the position of survey countries on these different dimensions. But we can firstly proceed to a hieararchical clustering in order to discuss the position of group of countries rather than single ones.  We obtain clearly five group of countries with characteristic profiles.
+
+
+```{r}
+cah<-HCPC(acp, nb.clust=5, graph=F)
+
+plot.HCPC(cah,choice = "tree")
+
+
+
+cahres<-data.frame(cah$data.clust)
+res<-cbind(acpres,cahres)
+res$ISO3<-row.names(res)
+res <- res[,c(14,13,9:12,1:8)]
+
+x<-catdes(res[,2:6],1,proba = 1)
+
+
+
+
+
+```
+
+
+
+
+- **Cluster 1** is characterized by a very negative opinion about USA and EU and a negative opinion about Russia. Only China is characterized by an average opinion comparable to the rest of the world. The countries member of this cluster are typically arabic countries from Middle East (*Egypt, Jordan, Pakistan, Occupied Palestinian Territories, Turkey*)
+
+```{r}
+kable(x$quanti[["1"]], digits=3)
+```
+
+
+- **Cluster 2** is characterized by a positive opinion of EU, a neutral opinon on USA and a very negative opinion of Russia and China. This situation is typically observed in countries member of the EU but rather from western and northern part (**France, Germany, Belgium, Sweden**) but also other OECD countries (**Japan, Korea, Canada, Australia, ...**)
+
+```{r}
+kable(x$quanti[["2"]], digits=3)
+```
+
+- **Cluster 3** is generally characterized by an average profile. More precisely it is characterized by neutral opinion of Russia, slighltly negative opinion on USA, slightly positive opinion on China and more negative opinion on European Union than in the rest of the sample. This situation corresponds to a large cluster of emerging countries located all around the world, including european countries from southern and eastern Europe like (*Greece, Slovenia, Czech Republic, ...*). UK is member of this group as well as Israel.
+
+```{r}
+kable(x$quanti[["3"]], digits=3)
+```
+
+- **Cluster 4** is a very specific case of countries having a much more positive opinion on Russia than usual, a rather positive opinion on USA and a rather negative opinion on China. Countries located in this group are european countries with good relations with Russia (*Bulgaria, Slovakia*) or asian countries  characterized by negative relation with China, generally due to border conflicts (*India, Vietnam, Philippines*).
+
+```{r}
+kable(x$quanti[["4"]], digits=3)
+```
+
+- **Cluster 5** is the complete opposite of Cluster 1 and is characterized by very positive opinion about all the world powers without distinction. This situation is typically associated to all countries from sub-saharan Africa present in the surveys (*Ivory Coast, Ethiopia, Ghana, ...*) but also some other poor and developping countries (*Bangladesh, Nicaragua, Thailand*)
+
+```{r}
+kable(x$quanti[["5"]], digits=3)
+```
+
+
+
+We can finally elabore a **geopolitical map of countries opinion about the major world power** over the period 2002-2023 
+
+
+```{r}
+ggplot(res) + aes(x=coo1, y=coo2, col=clust) +
+              geom_point() +
+              geom_text_repel(aes(label=ISO3),max.overlaps = 20, cex=2.5) +
+              theme_light() +
+              stat_ellipse() +
+             scale_x_continuous("Unfavorable to all                                                              Favorable to all") +
+              scale_y_continuous("USA and EU                      Russia and China") +
+              ggtitle("Map of global opinion of countries about USA, China, Russia and EU",
+                      subtitle = "Source : Global Attitude Survey, 2022-2023, Pew Research Center")
+  
+              
+```
+
+
 
